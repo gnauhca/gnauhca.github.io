@@ -3,17 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>归档: 2016 | JasonTurbo</title>
+  <title>Git 撤销操作 | JasonTurbo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="JasonTurbo">
-<meta property="og:url" content="http://yoursite.com/archives/2016/index.html">
+  <meta name="description" content="刚开始正式使用git不久，很多使用方法不是很了解，提交文件什么的总是提心吊胆的，生怕项目代码给自己弄乱，一开始为了保险还傻傻的copy一份放起来再做git提交。
+今天学习了git撤销的一些命令。发现git作为一个版本控制系统，项目的备份本来就是它自己的一种特性，它完全允许我们在各个git动作之间穿梭。手动copy备份真是太2了。
+总结一下，撤销相关的命令有reset、checkout、clean">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 撤销操作">
+<meta property="og:url" content="http://yoursite.com/2016/04/12/gitcancel/index.html">
 <meta property="og:site_name" content="JasonTurbo">
-<meta property="og:description">
+<meta property="og:description" content="刚开始正式使用git不久，很多使用方法不是很了解，提交文件什么的总是提心吊胆的，生怕项目代码给自己弄乱，一开始为了保险还傻傻的copy一份放起来再做git提交。
+今天学习了git撤销的一些命令。发现git作为一个版本控制系统，项目的备份本来就是它自己的一种特性，它完全允许我们在各个git动作之间穿梭。手动copy备份真是太2了。
+总结一下，撤销相关的命令有reset、checkout、clean">
+<meta property="og:updated_time" content="2016-05-26T09:27:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JasonTurbo">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Git 撤销操作">
+<meta name="twitter:description" content="刚开始正式使用git不久，很多使用方法不是很了解，提交文件什么的总是提心吊胆的，生怕项目代码给自己弄乱，一开始为了保险还傻傻的copy一份放起来再做git提交。
+今天学习了git撤销的一些命令。发现git作为一个版本控制系统，项目的备份本来就是它自己的一种特性，它完全允许我们在各个git动作之间穿梭。手动copy备份真是太2了。
+总结一下，撤销相关的命令有reset、checkout、clean">
   
   
     <link rel="icon" href="/favicon.png">
@@ -312,81 +319,83 @@ More info: [Deployment](https://hexo.io/docs/deployment.html)
 
 
       <div class="outer" id="outer">
-        <section id="main">
-
-
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/05/11/gitssh/" class="archive-article-date">
-  <time datetime="2016-05-11T12:35:37.000Z" itemprop="datePublished">5月 11</time>
+        <section id="main"><article id="post-gitcancel" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    <div class="article-meta">
+      <a href="/2016/04/12/gitcancel/" class="article-date">
+  <time datetime="2016-04-12T12:55:24.000Z" itemprop="datePublished">2016-04-12</time>
 </a>
       
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/工具配置/">工具配置</a>
+  </div>
+
+    </div>
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/11/gitssh/">通过配置ssh密钥认证连接Git</a>
+    <h1 class="article-title" itemprop="name">
+      Git 撤销操作
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/05/11/hello-world/" class="archive-article-date">
-  <time datetime="2016-05-11T12:13:38.000Z" itemprop="datePublished">5月 11</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/05/11/hello-world/">Hello World</a>
-    </h1>
-  
+        <p>刚开始正式使用git不久，很多使用方法不是很了解，提交文件什么的总是提心吊胆的，生怕项目代码给自己弄乱，一开始为了保险还傻傻的copy一份放起来再做git提交。</p>
+<p>今天学习了git撤销的一些命令。发现git作为一个版本控制系统，项目的备份本来就是它自己的一种特性，它完全允许我们在各个git动作之间穿梭。手动copy备份真是太2了。</p>
+<p>总结一下，撤销相关的命令有reset、checkout、clean</p>
+<p>　　</p>
+<p>checkout</p>
+<p>git checkout – file</p>
+<p>撤销对文件的修改，分两种情况</p>
+<p>1、文件之前添加到暂存区之后做的修改，执行此命令相当于 本地的 file &lt;== 暂存区的file</p>
+<p>2、暂存区没有该文件，执行此命令相当于 本地的file &lt;== 最新版本库的file</p>
+<p>也可以用  git checkout .  (.代表所有文件)，撤销本地所有文件的改动</p>
+<p>git checkout –ours / –theirs file</p>
+<p>合并出现冲突的时候，可以使用此命令将冲突文件重置为当前分支 (ours) 的，或者另一分支 (theirs) 的文件</p>
+<p>reset </p>
+<p>git reset –hard [commit]</p>
+<p>让本地文件回退到某一个版本，版本可以用SHA值指定，查看SHA值可以用 git log 或者git log –pretty=oneline (简化的log信息)查看</p>
+<p>那如果我回退到了一个版本，但是后来发现我又想回到前面的版本怎么办，git log 都找不到了！！！！</p>
+<p>没关系，git 还有办法： git reflog 就可以找到全部的commit的SHA值了</p>
+<p>git reset HEAD [file]</p>
+<p>将文件从暂存区删除</p>
+<p>clean</p>
+<p>git clean -fd </p>
+<p>这条命令是用来删除新增加的而且没有放到暂存区的文件，既 使用git status 时， 标记为  Untracked files 的那些文件</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/04/12/gitcancel/" class="archive-article-date">
-  <time datetime="2016-04-12T12:55:24.000Z" itemprop="datePublished">4月 12</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/04/12/gitcancel/">Git 撤销操作</a>
-    </h1>
-  
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://yoursite.com/2016/04/12/gitcancel/" data-id="cioo4lmbx0002anzruva7cw46" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/11/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
-
-
 
 </section>
         
