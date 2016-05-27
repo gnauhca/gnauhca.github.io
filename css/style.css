@@ -519,7 +519,22 @@ body {
   color: #777;
 }
 .banner-wrap {
+  position: relative;
   height: 360px;
+}
+.banner-wrap:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50px;
+}
+.banner-wrap:after {
+  bottom: 0;
+  background: -webkit-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.15));
+  background: -moz-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.15));
+  background: -ms-linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.15));
+  background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.15));
 }
 .banner-wrap #banner {
   position: relative;
@@ -1524,6 +1539,9 @@ pre .coffeescript .title {
 pre .keyword,
 pre .javascript .function {
   color: #c9c;
+}
+#mobile-nav {
+  display: none;
 }
 @media screen and (max-width: 479px) {
   #mobile-nav {
