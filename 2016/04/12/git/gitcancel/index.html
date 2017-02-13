@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="刚开始正式使用git不久，很多使用方法不是很了解，提交文件什么的总是提心吊胆的，生怕项目代码给自己弄乱，一开始为了保险还傻傻的copy一份放起来再做git提交。
+今天学习了git撤销的一些命令。发现git作为一个版本控制系统，项目的备份本来就是它自己的一种特性，它完全允许我们在各个git动作之间穿梭">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="JasonTurbo">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Git 撤销操作"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="JasonTurbo"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>Git 撤销操作 - JasonTurbo</title>
+
+    <!-- Tachyons Core CSS -->
+    <link rel="stylesheet" href="//unpkg.com/tachyons/css/tachyons.min.css">
+
+    <!-- Custom Fonts -->
+    <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+</head>
+
+
+<body>
+
+<!-- Main Content -->
+<!-- Banner -->
+<!-- Banner -->
+<div class="w-100 bg-1 ph5-ns ph3 text-light">
+    
+    <nav class="db dt-l w-100 mw8 center border-box pv3">
+        <a class="db dtc-l v-mid link dim w-100 w-25-l tc tl-l mb2 mb0-l white" href="/" title="JasonTurbo">
+            Jason Turbo
+            <!-- <img src="sdf" class="dib h3" alt="JasonTurbo"> -->
+        </a>
+        <div class="db dtc-l v-mid w-100 w-75-l tc tr-l">
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/" 
+                    title="首页">
+                    首页
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/archives" 
+                    title="归档">
+                    归档
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/about.html" 
+                    title="关于">
+                    关于
+                </a>
+            
+                <a class="link dim f6 f5-l dib mr3 mr4-l white" 
+                    href="/contact.html" 
+                    title="联系">
+                    联系
+                </a>
+            
+        </div>
+    </nav>
+
+    <!-- Title -->
+    <div class="w-100 mw8 center vh-40 dt">
+        <div class="dtc v-mid white">
+            <h1 class="f1-l f2-m tc tc-m tl-ns">Git 撤销操作</h1>
+            <p class="f4 fw3 pab-100px tc tc-m tl-ns">2016-04-12</p>
+        </div>
+    </div>
+
+    <!-- Icon
+    <div class="relative w-100 mw8 center white dn dn-m db-ns">
+        <i class="header-icon fa fa-file-text-o"></i>
+    </div> -->
+</div>
+
+<!-- Content -->
+<div class="w-100 ph2 ph4-m ph5-l mv5 mv6-l">
+    <div class="content">
+        <div class="mw8 center">
+            <div class="cf">
+                <div class="fl w-100 w-70-l mw7 left fw3 lh-copy pr4-ns pr0-m post-content">
+                    <!-- Tags Vertical -->
+                    
+                        <div class="tags-container-vertical">
+                            <div class="tags-sub-container">
+                                <a class="fw3 ph1 dib" href="/tags/Git/">#Git</a>
+                            </div>
+                        </div>
+                    
+
+                    <!-- Main Post Content -->
+                    <p>刚开始正式使用git不久，很多使用方法不是很了解，提交文件什么的总是提心吊胆的，生怕项目代码给自己弄乱，一开始为了保险还傻傻的copy一份放起来再做git提交。</p>
+<p>今天学习了git撤销的一些命令。发现git作为一个版本控制系统，项目的备份本来就是它自己的一种特性，它完全允许我们在各个git动作之间穿梭。手动copy备份真是太2了。</p>
+<p>总结一下，撤销相关的命令有reset、checkout、clean</p>
+<p>　　</p>
+<p>checkout</p>
+<p>git checkout – file</p>
+<p>撤销对文件的修改，分两种情况</p>
+<p>1、文件之前添加到暂存区之后做的修改，执行此命令相当于 本地的 file &lt;== 暂存区的file</p>
+<p>2、暂存区没有该文件，执行此命令相当于 本地的file &lt;== 最新版本库的file</p>
+<p>也可以用  git checkout .  (.代表所有文件)，撤销本地所有文件的改动</p>
+<p>git checkout –ours / –theirs file</p>
+<p>合并出现冲突的时候，可以使用此命令将冲突文件重置为当前分支 (ours) 的，或者另一分支 (theirs) 的文件</p>
+<p>reset </p>
+<p>git reset –hard [commit]</p>
+<p>让本地文件回退到某一个版本，版本可以用SHA值指定，查看SHA值可以用 git log 或者git log –pretty=oneline (简化的log信息)查看</p>
+<p>那如果我回退到了一个版本，但是后来发现我又想回到前面的版本怎么办，git log 都找不到了！！！！</p>
+<p>没关系，git 还有办法： git reflog 就可以找到全部的commit的SHA值了</p>
+<p>git reset HEAD [file]</p>
+<p>将文件从暂存区删除</p>
+<p>clean</p>
+<p>git clean -fd </p>
+<p>这条命令是用来删除新增加的而且没有放到暂存区的文件，既 使用git status 时， 标记为  Untracked files 的那些文件</p>
+
+                    
+                    <!-- Tags Bottom -->
+                    
+                        <div class="tags-container-bottom">
+                            <i class="fa fa-tag pr3 text-main-color"></i><a class="fw3 ph1 dib" href="/tags/Git/">#Git</a>
+                        </div>
+                    
+
+                    <!-- Comments -->
+                    
+
+
+
+                </div>
+                <div class="fl w-100 w-30-l center fw3 lh-copy pl4-ns tl black-50">
+                    
+                    <hr class="dn-l mw4 black-50 mt5" />
+                    
+                    <!-- Widget 1: About -->
+                    <div class="mt5 mt0-l">
+    <article class="dt db-l mw8 mw8-m mw5-ns center ml0-l bg-white mv3">
+        <div class="dn dtc-m db-l v-mid tc pr4 pr0-l" style="min-width: 6rem;">
+            <img src="https://img1.doubanio.com/view/photo/large/public/p2428351448.jpg" class="mb4-l h3 w3 h4-l w4-l dib" title="JasonTurbo">
+        </div>
+        <div class="dtc db-l v-mid lh-copy measure center f6 black-50 tj">
+            My name is Zhouzhichuang. You can call me Jason. I was born in 1991s.
+        </div>
+    </article>
+</div>
+
+                    <hr class="dn-l mw4 black-50 mt5" />
+                    
+                    <!-- Widget 2: Categories -->
+                    
+                        <div class="mt5 tc tl-l">
+    <h3>分类</h3>
+    
+        <p>
+            <a href="/categories/工具配置/">工具配置</a>
+        </p>
+    
+</div>
+
+
+                        <hr class="dn-l mw4 black-50 mt5" />
+                    
+
+                    <!-- Widget 3: Recent Posts -->
+                    <div class="mt5 tc tl-l">
+    <h3>最新文章</h3>
+    
+        <p>
+            <a href="/2017/02/11/linux/shell基础/">Untitled</a>
+        </p>
+    
+        <p>
+            <a href="/2016/11/24/threejs/THREEJS屏幕适配/">简单一招搞定 three.js 屏幕适配</a>
+        </p>
+    
+        <p>
+            <a href="/2016/11/24/design/cssartppt读后感/">IMPRESSIVE ART IN CSS 分享读后感</a>
+        </p>
+    
+        <p>
+            <a href="/2016/05/11/git/gitssh/">通过配置ssh密钥认证连接Git</a>
+        </p>
+    
+        <p>
+            <a href="/2016/04/12/git/gitcancel/">Git 撤销操作</a>
+        </p>
+    
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<div class="bg-1 ph2 ph5-ns pv4">
+        <div class="mv8">
+            <div class="center tc">
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://github.com/zhzhchwin" target="_blank">
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="https://codepen.io/JasonTurbo/" target="_blank">
+                            <i class="fa fa-codepen"></i>
+                        </a>
+                    </div>
+                
+                    <div class="dib mh3">
+                        <a class="f3 f2-ns white dim" href="mailto:576073927@qq.com" target="_blank">
+                            <i class="fa fa-envelope"></i>
+                        </a>
+                    </div>
+                
+            </div>
+            <!--div class="f6 f5-ns center tc white pt5 fw3">
+                
+            </div-->
+        </div>
+    </div>
+
+<!-- After Footer -->
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
