@@ -10,17 +10,14 @@
 
     <!--Description-->
     
-        <meta name="description" content="#头部
-第一行形如 #!/bin/bash, #!/bin/sh 的注释是为了指定解析这个脚本的程序。
-#修改脚本属性
-这一步主要是给脚本加入可执行权限。
+        <meta name="description" content="头部第一行形如 #!/bin/bash, #!/bin/sh 的注释是为了指定解析这个脚本的程序。
+修改脚本属性这一步主要是给脚本加入可执行权限。
 chmod +x filename.sh
 执行脚本
 ./filename.sh
-#变量
-定义
+变量定义
 首个字符必须为字母（a-z，A-Z）。
-中间不能有">
+中间不能有空格，可以使">
     
 
     <!--Author-->
@@ -30,7 +27,7 @@ chmod +x filename.sh
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="JasonTurbo"/>
+        <meta property="og:title" content="Shell 基础"/>
     
 
     <!--Open Graph Description-->
@@ -41,7 +38,7 @@ chmod +x filename.sh
 
     <!--Type page-->
     
-        <meta property="og:type" content="website" />
+        <meta property="og:type" content="article" />
     
 
     <!--Page Cover-->
@@ -52,7 +49,7 @@ chmod +x filename.sh
 
     <!-- Title -->
     
-    <title>JasonTurbo</title>
+    <title>Shell 基础 - JasonTurbo</title>
 
     <!-- Tachyons Core CSS -->
     <link rel="stylesheet" href="//unpkg.com/tachyons/css/tachyons.min.css">
@@ -85,8 +82,8 @@ chmod +x filename.sh
     
     <nav class="db dt-l w-100 mw8 center border-box pv3">
         <a class="db dtc-l v-mid link dim w-100 w-25-l tc tl-l mb2 mb0-l white" href="/" title="JasonTurbo">
-            Jason Turbo
-            <!-- <img src="sdf" class="dib h3" alt="JasonTurbo"> -->
+            
+            <img src="/images/avatar.jpg" class="v-mid dib h2 br-100" alt="JasonTurbo"> &nbsp; Jason
         </a>
         <div class="db dtc-l v-mid w-100 w-75-l tc tr-l">
             
@@ -120,8 +117,8 @@ chmod +x filename.sh
     <!-- Title -->
     <div class="w-100 mw8 center vh-40 dt">
         <div class="dtc v-mid white">
-            <h1 class="f1-l f2-m tc tc-m tl-ns">Untitled</h1>
-            <p class="f4 fw3 pab-100px tc tc-m tl-ns">2017-02-11</p>
+            <h1 class="f1-l f2-m tc tc-m tl-ns">Shell 基础</h1>
+            <p class="f4 fw1 pab-100px tc tc-m tl-ns">2017-02-11</p>
         </div>
     </div>
 
@@ -139,17 +136,20 @@ chmod +x filename.sh
                 <div class="fl w-100 w-70-l mw7 left fw3 lh-copy pr4-ns pr0-m post-content">
                     <!-- Tags Vertical -->
                     
+                        <div class="tags-container-vertical">
+                            <div class="tags-sub-container">
+                                <a class="fw3 ph1 dib" href="/tags/Shell/">#Shell</a>
+                            </div>
+                        </div>
+                    
 
                     <!-- Main Post Content -->
-                    <p>#头部</p>
-<p>第一行形如 #!/bin/bash, #!/bin/sh 的注释是为了指定解析这个脚本的程序。</p>
-<p>#修改脚本属性</p>
-<p>这一步主要是给脚本加入可执行权限。</p>
+                    <h1 id="头部"><a href="#头部" class="headerlink" title="头部"></a>头部</h1><p>第一行形如 #!/bin/bash, #!/bin/sh 的注释是为了指定解析这个脚本的程序。</p>
+<h1 id="修改脚本属性"><a href="#修改脚本属性" class="headerlink" title="修改脚本属性"></a>修改脚本属性</h1><p>这一步主要是给脚本加入可执行权限。</p>
 <pre><code>chmod +x filename.sh
 </code></pre><p>执行脚本</p>
 <pre><code>./filename.sh
-</code></pre><p>#变量</p>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+</code></pre><h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
 <li>首个字符必须为字母（a-z，A-Z）。</li>
 <li>中间不能有空格，可以使用下划线（_）。</li>
 <li>不能使用标点符号。</li>
@@ -191,6 +191,10 @@ echo ${arr[@]}
                     
                     <!-- Tags Bottom -->
                     
+                        <div class="tags-container-bottom">
+                            <i class="fa fa-tag pr3 text-main-color"></i><a class="fw3 ph1 dib" href="/tags/Shell/">#Shell</a>
+                        </div>
+                    
 
                     <!-- Comments -->
                     
@@ -206,7 +210,7 @@ echo ${arr[@]}
                     <div class="mt5 mt0-l">
     <article class="dt db-l mw8 mw8-m mw5-ns center ml0-l bg-white mv3">
         <div class="dn dtc-m db-l v-mid tc pr4 pr0-l" style="min-width: 6rem;">
-            <img src="https://img1.doubanio.com/view/photo/large/public/p2428351448.jpg" class="mb4-l h3 w3 h4-l w4-l dib" title="JasonTurbo">
+            <img src="/images/avatar.jpg" class="mb4-l h3 w3 h4-l w4-l dib" title="JasonTurbo">
         </div>
         <div class="dtc db-l v-mid lh-copy measure center f6 black-50 tj">
             My name is Zhouzhichuang. You can call me Jason. I was born in 1991s.
@@ -218,21 +222,33 @@ echo ${arr[@]}
                     
                     <!-- Widget 2: Categories -->
                     
+                        <div class="mt5 tc tl-l">
+    <h3>分类</h3>
+    
+        <p>
+            <a href="/categories/Linux/">Linux</a>
+        </p>
+    
+</div>
+
+
+                        <hr class="dn-l mw4 black-50 mt5" />
+                    
 
                     <!-- Widget 3: Recent Posts -->
                     <div class="mt5 tc tl-l">
     <h3>最新文章</h3>
     
         <p>
-            <a href="/2017/02/11/linux/shell基础/">Untitled</a>
-        </p>
-    
-        <p>
-            <a href="/2016/11/24/threejs/THREEJS屏幕适配/">简单一招搞定 three.js 屏幕适配</a>
+            <a href="/2017/02/11/linux/shell基础/">Shell 基础</a>
         </p>
     
         <p>
             <a href="/2016/11/24/design/cssartppt读后感/">IMPRESSIVE ART IN CSS 分享读后感</a>
+        </p>
+    
+        <p>
+            <a href="/2016/11/24/threejs/THREEJS屏幕适配/">简单一招搞定 three.js 屏幕适配</a>
         </p>
     
         <p>
