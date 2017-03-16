@@ -1,28 +1,40 @@
 var webpack = require('webpack');
 
 module.exports = {
-    entry: 'index.js',
-    output: {
-        'filename': 'entry.js',
+    entry: {
+        'index': './index.js',
     },
-    resolve: {
-        root: process.cwd(),
-        modulesDirectories: ['node_modules']
+    output: {
+        'path': './dist',
+        'filename': '[name].js'
     },
 
     devtool: 'source-map',
 
     module: {
-        loaders: [
-            { test: /.*\.scss$/, loaders: ['style', 'css', 'sass'] },
+        rules: [
+            { test: /.*\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
             {
                 test: /.*?\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel', 
-                query: { presets: ['es2015'] }
+                loader: 'babel-loader', 
+                query: { 
+                    presets: [ 'es2015'],
+                    plugins: ["transform-object-assign"]
+                }
+            },
+            { 
+                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, 
+                loader: 'file-loader?name=[path][name].[ext]'
             }
         ]
     },
+
+    plugins: [
+        // new webpack.ProvidePlugin({
+        //     $: 'zepto'
+        // })
+    ],
 
     devServer: {
         'content-base': '/',
