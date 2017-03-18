@@ -1,6 +1,7 @@
 @import './_reset.scss';
 
 
+
 .main {
     position: absolute;
     top: 50%;
@@ -53,7 +54,7 @@
         left: 200px;
         width: 40px;
         height: 34px;
-        background: #42e3e5 url(./images/enter.png) center no-repeat;
+        background: #42e3e5 url(../images/enter.png) center no-repeat;
         cursor: pointer;
     }
     .g-icons {
@@ -73,16 +74,16 @@
         background-size: auto 100%;
         &.i-github {
             width: 16px;
-            background-image: url(./images/i-github.png);
+            background-image: url(../images/i-github.png);
         }
         &.i-codepen {
             width: 94px;
-            background-image: url(./images/i-codepen.svg);
+            background-image: url(../images/i-codepen.svg);
             background-size: auto 100%;
         }
         &.i-blog {
             width: 30px;
-            background-image: url(./images/i-blog.png);
+            background-image: url(../images/i-blog.png);
         }
     }
 }

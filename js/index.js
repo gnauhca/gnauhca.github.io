@@ -1,5 +1,5 @@
 import 'script-loader!jquery';
-import './index.scss';
+import '../css/index.scss';
 import {resize} from './resize.js';
 
 
@@ -66,7 +66,7 @@ import {resize} from './resize.js';
 
             $(this).data('animate-id', animateId);
             animateData[animateId] = {
-                'transform': `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`
+                'transform': `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY}) rotateX(${Math.random()*360-180}deg)`
             }
         });
     }

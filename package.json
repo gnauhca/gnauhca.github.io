@@ -27,6 +27,7 @@
     "sass-loader": "^3.2.1",
     "script-loader": "^0.7.0",
     "style-loader": "^0.13.1",
+    "three": "^0.78.0",
     "to-string-loader": "^1.1.5",
     "tojson-loader": "^1.0.4",
     "tween.js": "^16.3.4",
