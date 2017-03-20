@@ -1,6 +1,33 @@
-import 'script-loader!jquery';
+// import './preset/preset.js';
 import '../css/index.scss';
 import {resize} from './resize.js';
+import Galaxy from './galaxy.js';
+import ASSETS from './common/assets.js';
+import Loader from './common/loader.js';
+
+let assetsLoader = new Loader();
+
+
+assetsLoader.load(ASSETS, (p)=>{console.log(p);})
+            .then((assets)=>{
+                // excute preset.js
+                let script = document.createElement('script');
+                script.src = assets.presetjs.src;
+                document.body.appendChild(script);
+                script.onload = init;
+
+                window.ZZC = {};
+                window.ZZC.ASSETS = assets;
+                console.log(ASSETS, assets);
+            })
+
+function init() {
+
+TIME.start();
+
+// webgl
+let galaxy = new Galaxy();
+galaxy.travel();
 
 
 // enter change
@@ -166,3 +193,7 @@ $.fn.hoverRotate = function($) {
 $('.a-item').hoverRotate();
 
 resize.init();
+
+
+
+}

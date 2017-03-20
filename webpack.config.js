@@ -3,10 +3,12 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         'index': './js/index.js',
+        'preset': './js/preset/preset.js'
     },
     output: {
         'path': './dist',
-        'filename': '[name].js'
+        'filename': '[name].js',
+        'publicPath': './dist/'
     },
 
     devtool: 'source-map',
@@ -17,11 +19,7 @@ module.exports = {
             {
                 test: /.*?\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader', 
-                query: { 
-                    presets: [ 'es2015'],
-                    plugins: ["transform-object-assign"]
-                }
+                loader: 'babel-loader'
             },
             { 
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, 
