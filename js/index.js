@@ -8,7 +8,7 @@ import Loader from './common/loader.js';
 let assetsLoader = new Loader();
 
 
-assetsLoader.load(ASSETS, (p)=>{console.log(p);})
+assetsLoader.load(ASSETS, (p)=>{console.log('loaded: ' + p);})
             .then((assets)=>{
                 // excute preset.js
                 let script = document.createElement('script');
@@ -27,7 +27,8 @@ TIME.start();
 
 // webgl
 let galaxy = new Galaxy();
-galaxy.travel();
+galaxy.entry();
+// galaxy.travel();
 
 
 // enter change

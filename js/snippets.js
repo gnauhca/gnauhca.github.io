@@ -64,11 +64,12 @@ class ImgSnippet extends Snippet {
             let radio = img.width / img.height;
             let drawWidth = this.cvs.width;
             let drawHeight = this.cvs.height;
-            if (radio > 0) {
+            if (radio > 1) {
                 drawHeight = drawWidth / radio
             } else {
-                drawWidth = drawHeight / radio
+                drawWidth = drawHeight * radio
             }
+            // console.log(drawWidth, drawHeight);
 
             this.ctx.drawImage(
                 img,
@@ -76,6 +77,7 @@ class ImgSnippet extends Snippet {
                 0,0,drawWidth,drawHeight
             );
             let texture = new THREE.CanvasTexture(this.cvs);
+
             // document.body.appendChild(this.cvs);
             this.plane.material.map = texture;
             this.plane.material.needsUpdate = true;
@@ -89,13 +91,20 @@ class ImgSnippet extends Snippet {
 // concrete Snippet
 let snippetCreator = {
     snippets: {
-        'name': function() {
+        'nametxt': function() {
             return new TextSnippet({
                 text: 'Chaz',
                 font: '70px microsoft yahei',
                 pos: {x: 50, y: 150}
             })
         },
+        'chaz': function() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.chaz.src,
+                width: 40
+            }) 
+        },
+        
         'age': function() {
             return new TextSnippet({
                 text: '25',
@@ -103,16 +112,17 @@ let snippetCreator = {
             })
         },
         'born': function() {
-            return new TextSnippet({
-                text: '1991.9',
-                font: '30px microsoft yahei'
-            })
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.born.src,
+                width: 25
+            }) 
         },
 
         'gender': function() {
             return new TextSnippet({
                 text: "\uf222",
-                font: "30px FontAwesome"
+                font: "50px FontAwesome",
+                pos: {x: 50, y: 150}
             })
         },
 
@@ -135,30 +145,31 @@ let snippetCreator = {
                 width: 20
             }) 
         },
-        'yumaoqiu': function() {
+        'lanqiu': function() {
             return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.yumaoqiu.src,
+                imgSrc: window.ZZC.ASSETS.snippets.lanqiu.src,
                 width: 20
             }) 
         },
         'sumiao': function() {
-            return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.sumiao.src,
-                width: 20
-            }) 
+            return new TextSnippet({
+                text: "\uf040",
+                font: "50px FontAwesome",
+                pos: {x: 50, y: 150}
+            })
         },
 
         // works
         'meizu': function() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.meizu.src,
-                width: 20
+                width: 30
             }) 
         },
         'tenda': function() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.tenda.src,
-                width: 20
+                width: 30
             }) 
         },
 

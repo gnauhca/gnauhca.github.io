@@ -9,6 +9,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 	var STATE = { NONE: -1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
 
 	this.object = object;
+	this.up = this.object.up.clone();
 	this.domElement = ( domElement !== undefined ) ? domElement : document;
 
 	// API
@@ -41,10 +42,12 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 	// travel
 	this.travel = false;
-	this.travelDistance = (new THREE.Vector3).copy(this.object.position).sub(this.target).length();
+	this.travelDistance = (new THREE.Vector3).copy(this.object.position).sub(this.target).setY(0).length();
 	this.travelSpeed = 50000; //  second for 360 degree
 	this.travelHeight = 200;
-	this.travelHeightOffset = this.travelHeight * 0.7;
+	this.travelHeightOffset = this.travelHeight * 0.3;
+
+
 
 	var EPS = 0.000001;
 
@@ -306,7 +309,6 @@ THREE.TrackballControls = function ( object, domElement ) {
 		var nextVec = new THREE.Vector3;
 		var subVec = new THREE.Vector3;
 
-		var up = new THREE.Vector3(0,1,0);
 		var upSubVec = new THREE.Vector3;
 
 		var len = (new THREE.Vector3).subVectors(this.object.position, this.target.clone().setY(this.object.position.y)).length();
@@ -331,9 +333,9 @@ THREE.TrackballControls = function ( object, domElement ) {
 		this.object.position.add(subVec);
 
 
-		//upSubVec.subVectors(up, this.object.up).setLength(upSubVec.length() * resetSpeed);
-		//this.object.up.add(upSubVec);
-		// this.object.position.copy(nextVec);
+		upSubVec.subVectors(this.up0, this.object.up).setLength(upSubVec.length() * resetSpeed);
+		this.object.up.add(upSubVec);
+		this.object.position.copy(nextVec);
 		this.object.lookAt(_this.target);
 		_eye.copy( _this.object.position ).sub( _this.target );
 		// console.log(this.object.position);
@@ -502,6 +504,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 		if ( _this.enabled === false ) return;
 
+		
 		event.preventDefault();
 		event.stopPropagation();
 

@@ -10,6 +10,12 @@ const ASSETS = {
     ], 
 
     snippets: {
+        'chaz': {
+            url: require('../../images/snippets/chaz.png'), size: 20
+        },
+        'born': {
+            url: require('../../images/snippets/born.png'), size: 20
+        },
         'guitar': {
             url: require('../../images/snippets/guitar.png'), size: 20
         },

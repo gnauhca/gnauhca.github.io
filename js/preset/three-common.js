@@ -110,8 +110,8 @@ THREE.Object3D.prototype.animate = function(target, dur, delay=0, tweenObj) {
 		object3D.userData.tweens =  object3D.userData.tweens||[];
 		object3D.userData.tweens.push(tween);
 
-		object3D.time = object3D.time || new Time();
-		object3D.time.addTween(tween);
+		object3D.userData.time = object3D.userData.time || new Time();
+		object3D.userData.time.addTween(tween);
 		setTimeout(()=>tween.start(), delay);
 	});
 }

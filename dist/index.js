@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 36);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -752,35 +752,41 @@ var ASSETS = {
     fonts: [{ url: 'http://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0', size: 76 }, { url: 'http://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0', size: 76 }],
 
     snippets: {
-        'guitar': {
-            url: __webpack_require__(22), size: 20
-        },
-        'lanqiu': {
-            url: __webpack_require__(24), size: 20
-        },
-        'meizu': {
-            url: __webpack_require__(25), size: 20
-        },
-        'pingpangqiu': {
-            url: __webpack_require__(26), size: 20
-        },
-        'sumiao': {
-            url: __webpack_require__(28), size: 20
-        },
-        'shufa': {
-            url: __webpack_require__(27), size: 20
-        },
-        'yumaoqiu': {
-            url: __webpack_require__(30), size: 20
-        },
-        'tenda': {
-            url: __webpack_require__(29), size: 20
-        },
-        'html5': {
+        'chaz': {
             url: __webpack_require__(23), size: 20
         },
+        'born': {
+            url: __webpack_require__(22), size: 20
+        },
+        'guitar': {
+            url: __webpack_require__(25), size: 20
+        },
+        'lanqiu': {
+            url: __webpack_require__(27), size: 20
+        },
+        'meizu': {
+            url: __webpack_require__(28), size: 20
+        },
+        'pingpangqiu': {
+            url: __webpack_require__(29), size: 20
+        },
+        'sumiao': {
+            url: __webpack_require__(31), size: 20
+        },
+        'shufa': {
+            url: __webpack_require__(30), size: 20
+        },
+        'yumaoqiu': {
+            url: __webpack_require__(33), size: 20
+        },
+        'tenda': {
+            url: __webpack_require__(32), size: 20
+        },
+        'html5': {
+            url: __webpack_require__(26), size: 20
+        },
         'css3': {
-            url: __webpack_require__(21), size: 20
+            url: __webpack_require__(24), size: 20
         }
     }
 };
@@ -1049,6 +1055,14 @@ var _planets = __webpack_require__(13);
 
 var _planets2 = _interopRequireDefault(_planets);
 
+var _stats = __webpack_require__(38);
+
+var _stats2 = _interopRequireDefault(_stats);
+
+var _bezierEasing = __webpack_require__(15);
+
+var _bezierEasing2 = _interopRequireDefault(_bezierEasing);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1056,6 +1070,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var stats = new _stats2.default();
 
 var Galaxy = function (_Time) {
     _inherits(Galaxy, _Time);
@@ -1071,6 +1087,9 @@ var Galaxy = function (_Time) {
         document.body.appendChild(_this.renderer.domElement);
         _this.renderer.setClearColor(0x2abced, 0);
 
+        var fog = new THREE.Fog(0xffffff, 0, 1500);
+        _this.scene.fog = fog;
+
         var winWidth = window.innerWidth;
         var winHeight = window.innerHeight;
 
@@ -1078,7 +1097,7 @@ var Galaxy = function (_Time) {
 
         _this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
 
-        _this.radius = 300;
+        _this.radius = 400;
 
         _this.planets = _planets2.default;
 
@@ -1094,29 +1113,40 @@ var Galaxy = function (_Time) {
     _createClass(Galaxy, [{
         key: 'setup',
         value: function setup() {
+            var _this2 = this;
+
             this.createBasic();
             this.setupPlanet();
+
+            var allGroup = new THREE.Group();
+
             Object.keys(this.objects).forEach(function (o) {
-                this.scene.add(this.objects[o]);
-            }.bind(this));
+                allGroup.add(_this2.objects[o]);
+            });
+
+            this.objects.allGroup = allGroup;
+            this.scene.add(this.objects.allGroup);
 
             this._controls = new THREE.TrackballControls(this.camera, this.renderer.domElement);
-            this._controls.travel = true;
+            this._controls.travel = false;
+            this._controls.enabled = false;
         }
     }, {
         key: 'createBasic',
         value: function createBasic() {
-            var outCircleGeom = new THREE.TorusGeometry(this.radius, 0.3, 3, 100);
+            var outCircleGeom = new THREE.TorusGeometry(this.radius, 1.3, 2, 200);
 
-            var outMat = new THREE.MeshBasicMaterial({ 'color': '#35b4d9' });
+            var outMat = new THREE.MeshBasicMaterial({ 'color': '#59cced' });
             var outCircle = new THREE.Mesh(outCircleGeom, outMat);
             outCircle.rotation.x = Math.PI * 0.5;
             this.objects.outCircle = outCircle;
 
-            var inCircleGeom = new THREE.TorusGeometry(300, 0.3, 3, 100);
-            var inMat = new THREE.MeshBasicMaterial({ 'color': '#35b4d9' });
+            var inCircleGeom = new THREE.TorusGeometry(this.radius + 10, 1.3, 2, 200);
+            var inMat = new THREE.MeshBasicMaterial({ 'color': '#ddd' });
             var inCircle = new THREE.Mesh(inCircleGeom, inMat);
-            inCircle.rotation.x = Math.PI * 0.5;
+            inCircle.rotation.x = Math.PI * 0.54;
+            inCircle.position.set(2, 4, 10);
+
             this.objects.inCircle = inCircle;
 
             var cameraRotate = new THREE.Euler(0, 0, Math.PI * 0.3);
@@ -1128,38 +1158,104 @@ var Galaxy = function (_Time) {
     }, {
         key: 'setupPlanet',
         value: function setupPlanet() {
-            var _this2 = this;
+            var _this3 = this;
 
             var snippetGroup = new THREE.Group();
 
             var planet = void 0;
-            for (var key in _planets2.default) {
+
+            var _loop = function _loop(key) {
                 planet = _planets2.default[key];
                 planet.setup();
+
+                var randomR = _this3.radius * (1.1 - 0.2 * Math.random());
                 planet.snippets.forEach(function (snippet, i) {
-                    snippet.position.set(_this2.radius * Math.cos(planet.angle + i * 0.02), Math.random() * 40 - 20, _this2.radius * Math.sin(planet.angle + i * 0.02));
+                    snippet.position.set(randomR * Math.cos(planet.angleItems[i]), Math.random() * 40 - 20, randomR * Math.sin(planet.angleItems[i]));
                     snippetGroup.add(snippet);
                 });
+            };
+
+            for (var key in _planets2.default) {
+                _loop(key);
             }
             this.objects.snippetGroup = snippetGroup;
         }
     }, {
         key: 'travel',
-        value: function travel() {}
+        value: function travel() {
+            this.travel = true;
+        }
+    }, {
+        key: 'entry',
+        value: function entry() {
+            var _this4 = this;
+
+            var aniDur = 3000;
+            var cameraDur = aniDur + 1000;
+            var easingFn = function () {
+                var bezierEasing = (0, _bezierEasing2.default)(0.2, 0.5, 0.7, 0.2);
+                return function (k) {
+                    return bezierEasing(k);
+                };
+            }();
+
+            this.camera.userData.animate = {
+                init: {
+                    position: new THREE.Vector3(0, 100, 200)
+                },
+                final: {
+                    position: this.camera.position.clone()
+                }
+            };
+            this.camera.userData.lookAt = new THREE.Vector3();
+
+            for (var key in this.camera.userData.animate.init) {
+                this.camera[key].copy(this.camera.userData.animate.init[key]);
+            }
+
+            this.camera.animate(this.camera.userData.animate.final, cameraDur, 0, {
+                easing: TWEEN.Easing.Linear.None,
+                onComplete: function onComplete() {
+                    _this4.travel();
+                }
+            });
+
+            this.objects.snippetGroup.children.forEach(function (snippet) {
+                snippet.userData.animate = {
+                    init: {
+                        position: new THREE.Vector3(),
+                        rotation: new THREE.Euler(0, 0, Math.random() * Math.PI * 2)
+                    },
+                    final: {
+                        position: snippet.position.clone(),
+                        rotation: snippet.rotation.clone()
+                    }
+                };
+
+                for (var _key in snippet.userData.animate.init) {
+                    snippet[_key].copy(snippet.userData.animate.init[_key]);
+                }
+
+                snippet.animate(snippet.userData.animate.final, aniDur, 0, { easing: easingFn });
+            });
+        }
     }, {
         key: 'seePlanet',
         value: function seePlanet(planetname) {}
     }, {
         key: 'render',
         value: function render() {
-            var _this3 = this;
+            var _this5 = this;
 
-            this.addTick(function () {
-                _this3._controls.update();
-                _this3.objects.snippetGroup.children.forEach(function (c) {
-                    c.lookAt(_this3.camera.position);
+            this.addTick(function (delta) {
+                stats.update();
+                _this5._controls.update();
+                _this5.objects.allGroup.rotation.y += Math.PI * 2 * delta / 50000;
+
+                _this5.objects.snippetGroup.children.forEach(function (c) {
+                    if (_this5.travel) c.rotation.y = -_this5.objects.allGroup.rotation.y;
                 });
-                _this3.renderer.render(_this3.scene, _this3.camera);
+                _this5.renderer.render(_this5.scene, _this5.camera);
             });
         }
     }]);
@@ -1224,10 +1320,10 @@ var resize = exports.resize = {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(15);
+var content = __webpack_require__(16);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(35)(content, {});
+var update = __webpack_require__(39)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1275,13 +1371,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Planet = function (_Time) {
     _inherits(Planet, _Time);
 
-    function Planet(name, angle, snippetNames) {
+    function Planet(name, snippetNames) {
         _classCallCheck(this, Planet);
 
         var _this = _possibleConstructorReturn(this, (Planet.__proto__ || Object.getPrototypeOf(Planet)).call(this));
 
         _this.name = name;
-        _this.angle = angle;
+
         _this.snippetNames = snippetNames;
         _this.snippets;
         return _this;
@@ -1302,11 +1398,11 @@ var Planet = function (_Time) {
 var planetData = [{
     'name': 'name',
     'angle': 0,
-    'snippets': ['name']
+    'snippets': ['chaz']
 }, {
     'name': 'age',
     'angle': 0,
-    'snippets': ['age', 'born']
+    'snippets': ['born']
 }, {
     'name': 'gender',
     'angle': 0,
@@ -1314,7 +1410,7 @@ var planetData = [{
 }, {
     'name': 'hobbies',
     'angle': 0,
-    'snippets': ['guitar', 'shufa', 'pingpangqiu', 'yumaoqiu', 'sumiao']
+    'snippets': ['guitar', 'shufa', 'pingpangqiu', 'lanqiu', 'sumiao']
 }, {
     'name': 'works',
     'angle': 0,
@@ -1325,11 +1421,29 @@ var planetData = [{
     'snippets': ['html5', 'css3']
 }];
 
-var angleStep = Math.PI * 2 / planetData.length;
+var angleGap = Math.PI * 0.1;
+var availableAngle = Math.PI * 2 - planetData.length * angleGap;
+var angleStep = availableAngle / planetData.reduce(function (p, c) {
+    return p + c.snippets.length;
+}, 0);
+
 var planets = {};
 
+var currentAngle = 0;
+
 for (var i = 0; i < planetData.length; i++) {
-    planets[planetData[i].name] = new Planet(planetData[i].name, angleStep * i, planetData[i].snippets);
+
+    var planet = new Planet(planetData[i].name, planetData[i].snippets);
+    planet.angle = currentAngle + angleStep * planetData[i].snippets.length / 2;
+
+    planet.angleItems = planetData[i].snippets.map(function (snippet) {
+        return currentAngle += angleStep;
+    });
+    console.log(planet);
+
+    planets[planetData[i].name] = planet;
+
+    currentAngle += angleGap;
 }
 exports.default = planets;
 
@@ -1444,11 +1558,12 @@ var ImgSnippet = function (_Snippet2) {
                 var radio = img.width / img.height;
                 var drawWidth = _this3.cvs.width;
                 var drawHeight = _this3.cvs.height;
-                if (radio > 0) {
+                if (radio > 1) {
                     drawHeight = drawWidth / radio;
                 } else {
-                    drawWidth = drawHeight / radio;
+                    drawWidth = drawHeight * radio;
                 }
+
 
                 _this3.ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, drawWidth, drawHeight);
                 var texture = new THREE.CanvasTexture(_this3.cvs);
@@ -1466,13 +1581,20 @@ var ImgSnippet = function (_Snippet2) {
 
 var snippetCreator = {
     snippets: {
-        'name': function name() {
+        'nametxt': function nametxt() {
             return new TextSnippet({
                 text: 'Chaz',
                 font: '70px microsoft yahei',
                 pos: { x: 50, y: 150 }
             });
         },
+        'chaz': function chaz() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.chaz.src,
+                width: 40
+            });
+        },
+
         'age': function age() {
             return new TextSnippet({
                 text: '25',
@@ -1480,16 +1602,17 @@ var snippetCreator = {
             });
         },
         'born': function born() {
-            return new TextSnippet({
-                text: '1991.9',
-                font: '30px microsoft yahei'
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.born.src,
+                width: 25
             });
         },
 
         'gender': function gender() {
             return new TextSnippet({
                 text: '\uF222',
-                font: "30px FontAwesome"
+                font: "50px FontAwesome",
+                pos: { x: 50, y: 150 }
             });
         },
 
@@ -1511,29 +1634,30 @@ var snippetCreator = {
                 width: 20
             });
         },
-        'yumaoqiu': function yumaoqiu() {
+        'lanqiu': function lanqiu() {
             return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.yumaoqiu.src,
+                imgSrc: window.ZZC.ASSETS.snippets.lanqiu.src,
                 width: 20
             });
         },
         'sumiao': function sumiao() {
-            return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.sumiao.src,
-                width: 20
+            return new TextSnippet({
+                text: '\uF040',
+                font: "50px FontAwesome",
+                pos: { x: 50, y: 150 }
             });
         },
 
         'meizu': function meizu() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.meizu.src,
-                width: 20
+                width: 30
             });
         },
         'tenda': function tenda() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.tenda.src,
-                width: 20
+                width: 30
             });
         },
 
@@ -1560,20 +1684,130 @@ exports.default = snippetCreator;
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports) {
+
+/**
+ * https://github.com/gre/bezier-easing
+ * BezierEasing - use bezier curve for transition easing function
+ * by Gaëtan Renaudeau 2014 - 2015 – MIT License
+ */
+
+// These values are established by empiricism with tests (tradeoff: performance VS precision)
+var NEWTON_ITERATIONS = 4;
+var NEWTON_MIN_SLOPE = 0.001;
+var SUBDIVISION_PRECISION = 0.0000001;
+var SUBDIVISION_MAX_ITERATIONS = 10;
+
+var kSplineTableSize = 11;
+var kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
+
+var float32ArraySupported = typeof Float32Array === 'function';
+
+function A (aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1; }
+function B (aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1; }
+function C (aA1)      { return 3.0 * aA1; }
+
+// Returns x(t) given t, x1, and x2, or y(t) given t, y1, and y2.
+function calcBezier (aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
+
+// Returns dx/dt given t, x1, and x2, or dy/dt given t, y1, and y2.
+function getSlope (aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1); }
+
+function binarySubdivide (aX, aA, aB, mX1, mX2) {
+  var currentX, currentT, i = 0;
+  do {
+    currentT = aA + (aB - aA) / 2.0;
+    currentX = calcBezier(currentT, mX1, mX2) - aX;
+    if (currentX > 0.0) {
+      aB = currentT;
+    } else {
+      aA = currentT;
+    }
+  } while (Math.abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
+  return currentT;
+}
+
+function newtonRaphsonIterate (aX, aGuessT, mX1, mX2) {
+ for (var i = 0; i < NEWTON_ITERATIONS; ++i) {
+   var currentSlope = getSlope(aGuessT, mX1, mX2);
+   if (currentSlope === 0.0) {
+     return aGuessT;
+   }
+   var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
+   aGuessT -= currentX / currentSlope;
+ }
+ return aGuessT;
+}
+
+module.exports = function bezier (mX1, mY1, mX2, mY2) {
+  if (!(0 <= mX1 && mX1 <= 1 && 0 <= mX2 && mX2 <= 1)) {
+    throw new Error('bezier x values must be in [0, 1] range');
+  }
+
+  // Precompute samples table
+  var sampleValues = float32ArraySupported ? new Float32Array(kSplineTableSize) : new Array(kSplineTableSize);
+  if (mX1 !== mY1 || mX2 !== mY2) {
+    for (var i = 0; i < kSplineTableSize; ++i) {
+      sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
+    }
+  }
+
+  function getTForX (aX) {
+    var intervalStart = 0.0;
+    var currentSample = 1;
+    var lastSample = kSplineTableSize - 1;
+
+    for (; currentSample !== lastSample && sampleValues[currentSample] <= aX; ++currentSample) {
+      intervalStart += kSampleStepSize;
+    }
+    --currentSample;
+
+    // Interpolate to provide an initial guess for t
+    var dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
+    var guessForT = intervalStart + dist * kSampleStepSize;
+
+    var initialSlope = getSlope(guessForT, mX1, mX2);
+    if (initialSlope >= NEWTON_MIN_SLOPE) {
+      return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
+    } else if (initialSlope === 0.0) {
+      return guessForT;
+    } else {
+      return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
+    }
+  }
+
+  return function BezierEasing (x) {
+    if (mX1 === mY1 && mX2 === mY2) {
+      return x; // linear
+    }
+    // Because JavaScript number are imprecise, we should guarantee the extremes are right.
+    if (x === 0) {
+      return 0;
+    }
+    if (x === 1) {
+      return 1;
+    }
+    return calcBezier(getTForX(x), mY1, mY2);
+  };
+};
+
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(16)();
+exports = module.exports = __webpack_require__(17)();
 // imports
 
 
 // module
-exports.push([module.i, "/* RESET*/\nhtml,\nbody,\ndiv,\nul,\nol,\nli,\ndl,\ndt,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\npre,\nform,\np,\nblockquote,\nfieldset,\ninput,\nabbr,\narticle,\naside,\ncommand,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmark,\nmeter,\nnav,\noutput,\nprogress,\nsection,\nsummary,\ntime {\n  margin: 0;\n  padding: 0; }\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\npre,\ncode,\naddress,\ncaption,\ncite,\ncode,\nem,\nstrong,\nth,\nfigcaption {\n  font-size: 1em;\n  font-weight: normal;\n  font-style: normal; }\n\nfieldset,\niframe {\n  border: none; }\n\ncaption,\nth {\n  text-align: left; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\narticle,\naside,\nfooter,\nheader,\nhgroup,\nnav,\nsection,\nfigure,\nfigcaption {\n  display: block; }\n\n/* LAYOUT */\n* {\n  margin: 0;\n  padding: 0; }\n\nhtml,\nbody {\n  width: 100%;\n  height: 100%;\n  position: relative; }\n\nhtml {\n  background-color: #fff; }\n\n.clear {\n  clear: both; }\n\n.clearer {\n  clear: both;\n  display: block;\n  margin: 0;\n  padding: 0;\n  height: 0;\n  line-height: 1px;\n  font-size: 1px; }\n\n.selfclear {\n  zoom: 1; }\n\n.selfclear:after {\n  content: '.';\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden; }\n\nimg {\n  border: 0; }\n\na {\n  text-decoration: none;\n  color: #515151; }\n  a:focus {\n    outline: none; }\n\ni {\n  font-style: normal; }\n\nul,\nli {\n  list-style: none; }\n\nbody {\n  font-family: PingHei, 'PingFang SC', Helvetica Neue, 'Work Sans', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;\n  font-size: 14px;\n  color: #515151; }\n\n.clearfix:after,\n.clearfix:before {\n  content: \"\";\n  display: table;\n  height: 0px;\n  clear: both;\n  visibility: hidden; }\n\n.clearfix {\n  *zoom: 1; }\n\n.fl {\n  float: left; }\n\n.fr {\n  float: right; }\n\n.br0 {\n  border: none; }\n\ncanvas {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: -1;\n  pointer-events: none; }\n\n.main {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  width: 400px;\n  height: 400px;\n  margin-top: -200px;\n  margin-left: -200px; }\n\n.main > .animate {\n  transition: opacity 1.5s; }\n\n.invisible {\n  position: relative;\n  opacity: 0;\n  z-index: -1; }\n\n.greeting h1 {\n  position: absolute;\n  top: 113px;\n  left: 40px;\n  font-size: 42px; }\n\n.greeting .ipt {\n  position: absolute;\n  top: 182px;\n  left: 45px;\n  box-sizing: border-box;\n  padding-left: 10px;\n  width: 140px;\n  height: 34px;\n  background: #fff;\n  border: 1px solid #c7c7c7;\n  font-size: 16px;\n  line-height: 34px; }\n  .greeting .ipt:focus {\n    outline: none; }\n\n.greeting .btn {\n  display: inline-block;\n  position: absolute;\n  top: 182px;\n  left: 200px;\n  width: 40px;\n  height: 34px;\n  background: #42e3e5 url(" + __webpack_require__(17) + ") center no-repeat;\n  cursor: pointer; }\n\n.greeting .g-icons {\n  position: absolute;\n  top: 242px;\n  left: 45px; }\n  .greeting .g-icons a {\n    margin-right: 5px; }\n\n.greeting .icon {\n  display: inline-block;\n  vertical-align: middle;\n  height: 16px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: auto 100%; }\n  .greeting .icon.i-github {\n    width: 16px;\n    background-image: url(" + __webpack_require__(20) + "); }\n  .greeting .icon.i-codepen {\n    width: 94px;\n    background-image: url(" + __webpack_require__(19) + ");\n    background-size: auto 100%; }\n  .greeting .icon.i-blog {\n    width: 30px;\n    background-image: url(" + __webpack_require__(18) + "); }\n\n.about {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  width: 100%;\n  margin-top: -140px; }\n  .about .back-btn {\n    position: absolute;\n    left: 50%;\n    bottom: -40px;\n    transform: translateX(-50%);\n    cursor: pointer;\n    font-size: 24px;\n    color: #35b4d9; }\n  .about .corner {\n    position: absolute; }\n    .about .corner:before, .about .corner:after {\n      position: absolute;\n      display: block;\n      content: '';\n      background: #35b4d9; }\n    .about .corner:before {\n      height: 1px;\n      width: 100px; }\n    .about .corner:after {\n      width: 1px;\n      height: 100px; }\n  .about .corner-1 {\n    left: 0;\n    top: 0; }\n    .about .corner-1:before, .about .corner-1:after {\n      left: 0;\n      top: 0; }\n  .about .corner-2 {\n    right: 0;\n    bottom: 0; }\n    .about .corner-2:before, .about .corner-2:after {\n      right: 0;\n      bottom: 0; }\n  .about .a-list {\n    width: 375px;\n    margin: 20px;\n    font-size: 18px;\n    line-height: 2;\n    *zoom: 1; }\n    .about .a-list:after, .about .a-list:before {\n      content: \"\";\n      display: table;\n      height: 0px;\n      clear: both;\n      visibility: hidden; }\n  .about .a-item {\n    float: left;\n    position: relative;\n    width: 110px;\n    height: 110px;\n    margin: 5px;\n    perspective: 800px;\n    transform-origin: left top; }\n    .about .a-item:nth-child(1) {\n      transition: transform 0.8s 0.05s; }\n    .about .a-item:nth-child(2) {\n      transition: transform 0.8s 0.1s; }\n    .about .a-item:nth-child(3) {\n      transition: transform 0.8s 0.15s; }\n    .about .a-item:nth-child(4) {\n      transition: transform 0.8s 0.2s; }\n    .about .a-item:nth-child(5) {\n      transition: transform 0.8s 0.25s; }\n    .about .a-item:nth-child(6) {\n      transition: transform 0.8s 0.3s; }\n    .about .a-item .a-item-box {\n      position: relative;\n      width: 100%;\n      height: 100%;\n      transition: transform 0.2s; }\n    .about .a-item .a-item-con {\n      transform-style: preserve-3d;\n      position: relative;\n      width: 100%;\n      height: 100%;\n      background: #79e0f6;\n      text-align: center;\n      color: #fff;\n      transition: all 0.7s 0.1s; }\n    .about .a-item .a-wrap {\n      display: table;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      backface-visibility: hidden; }\n    .about .a-item .a-con {\n      display: table-cell;\n      vertical-align: middle;\n      width: 100%;\n      height: 100%; }\n  .about .a-desc {\n    transform: rotateX(180deg); }\n  .about .a-item.hover .a-item-con, .about .a-item:hover .a-item-con {\n    transform: rotateX(180deg); }\n  .about .a-item:nth-child(1) .a-item-con {\n    background: #79e0f6; }\n  .about .a-item:nth-child(2) .a-item-con {\n    background: #3eccea; }\n  .about .a-item:nth-child(3) .a-item-con {\n    background: #79eff6; }\n  .about .a-item:nth-child(4) .a-item-con {\n    background: #65bcff; }\n  .about .a-item:nth-child(5) .a-item-con {\n    background: #45e0f7; }\n  .about .a-item:nth-child(6) .a-item-con {\n    background: #45c7f7; }\n", ""]);
+exports.push([module.i, "/* RESET*/\nhtml,\nbody,\ndiv,\nul,\nol,\nli,\ndl,\ndt,\ndd,\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\npre,\nform,\np,\nblockquote,\nfieldset,\ninput,\nabbr,\narticle,\naside,\ncommand,\ndetails,\nfigcaption,\nfigure,\nfooter,\nheader,\nhgroup,\nmark,\nmeter,\nnav,\noutput,\nprogress,\nsection,\nsummary,\ntime {\n  margin: 0;\n  padding: 0; }\n\nh1,\nh2,\nh3,\nh4,\nh5,\nh6,\npre,\ncode,\naddress,\ncaption,\ncite,\ncode,\nem,\nstrong,\nth,\nfigcaption {\n  font-size: 1em;\n  font-weight: normal;\n  font-style: normal; }\n\nfieldset,\niframe {\n  border: none; }\n\ncaption,\nth {\n  text-align: left; }\n\ntable {\n  border-collapse: collapse;\n  border-spacing: 0; }\n\narticle,\naside,\nfooter,\nheader,\nhgroup,\nnav,\nsection,\nfigure,\nfigcaption {\n  display: block; }\n\n/* LAYOUT */\n* {\n  margin: 0;\n  padding: 0; }\n\nhtml,\nbody {\n  width: 100%;\n  height: 100%;\n  position: relative; }\n\nhtml {\n  background-color: #fff; }\n\n.clear {\n  clear: both; }\n\n.clearer {\n  clear: both;\n  display: block;\n  margin: 0;\n  padding: 0;\n  height: 0;\n  line-height: 1px;\n  font-size: 1px; }\n\n.selfclear {\n  zoom: 1; }\n\n.selfclear:after {\n  content: '.';\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden; }\n\nimg {\n  border: 0; }\n\na {\n  text-decoration: none;\n  color: #515151; }\n  a:focus {\n    outline: none; }\n\ni {\n  font-style: normal; }\n\nul,\nli {\n  list-style: none; }\n\nbody {\n  font-family: PingHei, 'PingFang SC', Helvetica Neue, 'Work Sans', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;\n  font-size: 14px;\n  color: #515151; }\n\n.clearfix:after,\n.clearfix:before {\n  content: \"\";\n  display: table;\n  height: 0px;\n  clear: both;\n  visibility: hidden; }\n\n.clearfix {\n  *zoom: 1; }\n\n.fl {\n  float: left; }\n\n.fr {\n  float: right; }\n\n.br0 {\n  border: none; }\n\ncanvas {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 0; }\n\n.main {\n  position: absolute;\n  z-index: 1;\n  top: 50%;\n  left: 50%;\n  width: 400px;\n  height: 400px;\n  margin-top: -200px;\n  margin-left: -200px; }\n\n.main > .animate {\n  transition: opacity 1.5s; }\n\n.invisible {\n  position: relative;\n  opacity: 0;\n  z-index: -1; }\n\n.greeting h1 {\n  position: absolute;\n  top: 113px;\n  left: 40px;\n  font-size: 42px; }\n\n.greeting .ipt {\n  position: absolute;\n  top: 182px;\n  left: 45px;\n  box-sizing: border-box;\n  padding-left: 10px;\n  width: 140px;\n  height: 34px;\n  background: #fff;\n  border: 1px solid #c7c7c7;\n  font-size: 16px;\n  line-height: 34px; }\n  .greeting .ipt:focus {\n    outline: none; }\n\n.greeting .btn {\n  display: inline-block;\n  position: absolute;\n  top: 182px;\n  left: 200px;\n  width: 40px;\n  height: 34px;\n  background: #42e3e5 url(" + __webpack_require__(18) + ") center no-repeat;\n  cursor: pointer; }\n\n.greeting .g-icons {\n  position: absolute;\n  top: 242px;\n  left: 45px; }\n  .greeting .g-icons a {\n    margin-right: 5px; }\n\n.greeting .icon {\n  display: inline-block;\n  vertical-align: middle;\n  height: 16px;\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: auto 100%; }\n  .greeting .icon.i-github {\n    width: 16px;\n    background-image: url(" + __webpack_require__(21) + "); }\n  .greeting .icon.i-codepen {\n    width: 94px;\n    background-image: url(" + __webpack_require__(20) + ");\n    background-size: auto 100%; }\n  .greeting .icon.i-blog {\n    width: 30px;\n    background-image: url(" + __webpack_require__(19) + "); }\n\n.about {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  width: 100%;\n  margin-top: -140px; }\n  .about .back-btn {\n    position: absolute;\n    left: 50%;\n    bottom: -40px;\n    transform: translateX(-50%);\n    cursor: pointer;\n    font-size: 24px;\n    color: #35b4d9; }\n  .about .corner {\n    position: absolute; }\n    .about .corner:before, .about .corner:after {\n      position: absolute;\n      display: block;\n      content: '';\n      background: #35b4d9; }\n    .about .corner:before {\n      height: 1px;\n      width: 100px; }\n    .about .corner:after {\n      width: 1px;\n      height: 100px; }\n  .about .corner-1 {\n    left: 0;\n    top: 0; }\n    .about .corner-1:before, .about .corner-1:after {\n      left: 0;\n      top: 0; }\n  .about .corner-2 {\n    right: 0;\n    bottom: 0; }\n    .about .corner-2:before, .about .corner-2:after {\n      right: 0;\n      bottom: 0; }\n  .about .a-list {\n    width: 375px;\n    margin: 20px;\n    font-size: 18px;\n    line-height: 2;\n    *zoom: 1; }\n    .about .a-list:after, .about .a-list:before {\n      content: \"\";\n      display: table;\n      height: 0px;\n      clear: both;\n      visibility: hidden; }\n  .about .a-item {\n    float: left;\n    position: relative;\n    width: 110px;\n    height: 110px;\n    margin: 5px;\n    perspective: 800px;\n    transform-origin: left top; }\n    .about .a-item:nth-child(1) {\n      transition: transform 0.8s 0.05s; }\n    .about .a-item:nth-child(2) {\n      transition: transform 0.8s 0.1s; }\n    .about .a-item:nth-child(3) {\n      transition: transform 0.8s 0.15s; }\n    .about .a-item:nth-child(4) {\n      transition: transform 0.8s 0.2s; }\n    .about .a-item:nth-child(5) {\n      transition: transform 0.8s 0.25s; }\n    .about .a-item:nth-child(6) {\n      transition: transform 0.8s 0.3s; }\n    .about .a-item .a-item-box {\n      position: relative;\n      width: 100%;\n      height: 100%;\n      transition: transform 0.2s; }\n    .about .a-item .a-item-con {\n      transform-style: preserve-3d;\n      position: relative;\n      width: 100%;\n      height: 100%;\n      background: #79e0f6;\n      text-align: center;\n      color: #fff;\n      transition: all 0.7s 0.1s; }\n    .about .a-item .a-wrap {\n      display: table;\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 100%;\n      backface-visibility: hidden; }\n    .about .a-item .a-con {\n      display: table-cell;\n      vertical-align: middle;\n      width: 100%;\n      height: 100%; }\n  .about .a-desc {\n    transform: rotateX(180deg); }\n  .about .a-item.hover .a-item-con, .about .a-item:hover .a-item-con {\n    transform: rotateX(180deg); }\n  .about .a-item:nth-child(1) .a-item-con {\n    background: #79e0f6; }\n  .about .a-item:nth-child(2) .a-item-con {\n    background: #3eccea; }\n  .about .a-item:nth-child(3) .a-item-con {\n    background: #79eff6; }\n  .about .a-item:nth-child(4) .a-item-con {\n    background: #65bcff; }\n  .about .a-item:nth-child(5) .a-item-con {\n    background: #45e0f7; }\n  .about .a-item:nth-child(6) .a-item-con {\n    background: #45c7f7; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /*
@@ -1629,95 +1863,118 @@ module.exports = function() {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/enter.png";
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/i-blog.png";
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/i-codepen.svg";
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "images/i-github.png";
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/snippets/css3.png";
-
-/***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/guitar.png";
+module.exports = __webpack_require__.p + "images/snippets/born.png";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/html5.png";
+module.exports = __webpack_require__.p + "images/snippets/chaz.png";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/lanqiu.png";
+module.exports = __webpack_require__.p + "images/snippets/css3.png";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/meizu.png";
+module.exports = __webpack_require__.p + "images/snippets/guitar.png";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/pingpangqiu.png";
+module.exports = __webpack_require__.p + "images/snippets/html5.png";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/shufa.png";
+module.exports = __webpack_require__.p + "images/snippets/lanqiu.png";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/sumiao.png";
+module.exports = __webpack_require__.p + "images/snippets/meizu.png";
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/snippets/tenda.png";
+module.exports = __webpack_require__.p + "images/snippets/pingpangqiu.png";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__.p + "images/snippets/shufa.png";
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/snippets/sumiao.png";
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/snippets/tenda.png";
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports = __webpack_require__.p + "images/snippets/yumaoqiu.png";
 
 /***/ }),
-/* 31 */,
-/* 32 */,
-/* 33 */,
 /* 34 */,
-/* 35 */
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// stats.js - http://github.com/mrdoob/stats.js
+(function(f,e){ true?module.exports=e():"function"===typeof define&&define.amd?define(e):f.Stats=e()})(this,function(){var f=function(){function e(a){c.appendChild(a.dom);return a}function u(a){for(var d=0;d<c.children.length;d++)c.children[d].style.display=d===a?"block":"none";l=a}var l=0,c=document.createElement("div");c.style.cssText="position:fixed;top:0;left:0;cursor:pointer;opacity:0.9;z-index:10000";c.addEventListener("click",function(a){a.preventDefault();
+u(++l%c.children.length)},!1);var k=(performance||Date).now(),g=k,a=0,r=e(new f.Panel("FPS","#0ff","#002")),h=e(new f.Panel("MS","#0f0","#020"));if(self.performance&&self.performance.memory)var t=e(new f.Panel("MB","#f08","#201"));u(0);return{REVISION:16,dom:c,addPanel:e,showPanel:u,begin:function(){k=(performance||Date).now()},end:function(){a++;var c=(performance||Date).now();h.update(c-k,200);if(c>g+1E3&&(r.update(1E3*a/(c-g),100),g=c,a=0,t)){var d=performance.memory;t.update(d.usedJSHeapSize/
+1048576,d.jsHeapSizeLimit/1048576)}return c},update:function(){k=this.end()},domElement:c,setMode:u}};f.Panel=function(e,f,l){var c=Infinity,k=0,g=Math.round,a=g(window.devicePixelRatio||1),r=80*a,h=48*a,t=3*a,v=2*a,d=3*a,m=15*a,n=74*a,p=30*a,q=document.createElement("canvas");q.width=r;q.height=h;q.style.cssText="width:80px;height:48px";var b=q.getContext("2d");b.font="bold "+9*a+"px Helvetica,Arial,sans-serif";b.textBaseline="top";b.fillStyle=l;b.fillRect(0,0,r,h);b.fillStyle=f;b.fillText(e,t,v);
+b.fillRect(d,m,n,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d,m,n,p);return{dom:q,update:function(h,w){c=Math.min(c,h);k=Math.max(k,h);b.fillStyle=l;b.globalAlpha=1;b.fillRect(0,0,r,m);b.fillStyle=f;b.fillText(g(h)+" "+e+" ("+g(c)+"-"+g(k)+")",t,v);b.drawImage(q,d+a,m,n-a,p,d,m,n-a,p);b.fillRect(d+n-a,m,a,p);b.fillStyle=l;b.globalAlpha=.9;b.fillRect(d+n-a,m,a,g((1-h/w)*p))}}};return f});
+
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports) {
 
 /*
@@ -1969,7 +2226,7 @@ function updateLink(linkElement, obj) {
 
 
 /***/ }),
-/* 36 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2000,7 +2257,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var assetsLoader = new _loader2.default();
 
 assetsLoader.load(_assets2.default, function (p) {
-    console.log(p);
+    console.log('loaded: ' + p);
 }).then(function (assets) {
     var script = document.createElement('script');
     script.src = assets.presetjs.src;
@@ -2017,7 +2274,7 @@ function init() {
     TIME.start();
 
     var galaxy = new _galaxy2.default();
-    galaxy.travel();
+    galaxy.entry();
 
     (function () {
         var $greeting = $('.greeting');

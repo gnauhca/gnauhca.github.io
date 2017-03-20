@@ -2,10 +2,10 @@ import Time from './common/time.js';
 import snippetCreator from './snippets.js';
 
 class Planet extends Time {
-    constructor(name, angle, snippetNames) {
+    constructor(name, snippetNames) {
         super();
         this.name = name;
-        this.angle = angle;
+        // this.angleRange = angleRange;// [Math.PI, Math.PI * 1.3]??
         this.snippetNames = snippetNames;
         this.snippets;
         //this.setup();
@@ -22,12 +22,12 @@ let planetData = [
     {
         'name': 'name',
         'angle': 0,
-        'snippets': ['name']
+        'snippets': ['chaz']
     }, 
     {
         'name': 'age',
         'angle': 0,
-        'snippets': ['age', 'born']
+        'snippets': ['born']
     },
     {
         'name': 'gender',
@@ -37,7 +37,7 @@ let planetData = [
     {
         'name': 'hobbies',
         'angle': 0,
-        'snippets': ['guitar', 'shufa', 'pingpangqiu', 'yumaoqiu', 'sumiao']
+        'snippets': ['guitar', 'shufa', 'pingpangqiu', 'lanqiu', 'sumiao']
     },
     {
         'name': 'works',
@@ -52,14 +52,32 @@ let planetData = [
     
 ]
 
-let angleStep = Math.PI * 2 / planetData.length;
+let angleGap = Math.PI * 0.1;
+let availableAngle = Math.PI * 2 - planetData.length * angleGap;
+let angleStep = availableAngle / planetData.reduce(function(p, c) {
+    return p + c.snippets.length;
+}, 0);
+
 let planets = {};
 
+
+let currentAngle = 0;
+
 for (let i = 0; i < planetData.length; i++) {
-    planets[planetData[i].name] = new Planet(
+    
+    let planet = new Planet(
         planetData[i].name,
-        angleStep * i,
         planetData[i].snippets
     );
+    planet.angle = currentAngle + angleStep * planetData[i].snippets.length/2;
+
+    planet.angleItems = planetData[i].snippets.map((snippet)=>{
+        return currentAngle += angleStep;
+    });
+    console.log(planet);
+
+    planets[planetData[i].name] = planet;
+    
+    currentAngle += angleGap;
 }
 export default planets;
