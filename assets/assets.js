@@ -10,7 +10,7 @@ const BASICASSETS = {
 };
 
 const ASSETS = {
-    presetjs: {url: distPath + '/preset.js', size: 8},
+    presetjs: {url: distPath + '/preset.js', size: 50},
 
     // svg
     /*snippets: {
