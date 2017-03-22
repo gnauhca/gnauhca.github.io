@@ -1,3 +1,4 @@
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
@@ -16,19 +17,21 @@ module.exports = {
     module: {
         rules: [
             { test: /.*\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
+            { test: /.*\.css$/, loaders: ['css-loader'] },
             {
                 test: /.*?\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
             { 
-                test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, 
+                test: /\.(gif|jpg|png|woff|svg|eot|ttf|json)\??.*$/, 
                 loader: 'file-loader?name=[path][name].[ext]'
             }
         ]
     },
 
     plugins: [
+        new UglifyJSPlugin()
         // new webpack.ProvidePlugin({
         //     $: 'zepto'
         // })

@@ -1,4 +1,46 @@
 @import './_reset.scss';
+@import './fonts/yanti.css';
+
+body {
+    // font-family: 'yanti';
+    overflow: hidden;
+}
+
+.view {
+    transition: opacity 0.5s;
+}
+.active {
+    opacity: 1;
+}
+.inactive {
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.numbers-wrap {
+    position: absolute;
+    left: 0;    
+    top: 50%;
+    width: 100%;
+    height: 50px;
+    margin-top: -25px;
+    font-size: 30px;
+    line-height: 50px;
+
+    .numbers {
+        display: inline-block;
+        width: 100px;
+    }
+}
 
 canvas {
     position: absolute;
@@ -11,6 +53,7 @@ canvas {
 }
 
 .main {
+    visibility: hidden;
     position: absolute;
     z-index: 1;
     top: 50%;
@@ -19,7 +62,13 @@ canvas {
     height: 400px;
     margin-top: -200px;
     margin-left: -200px;
+    
     // outline: 1px solid red;
+
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 .main>.animate {
@@ -33,11 +82,22 @@ canvas {
 }
 
 .greeting {
+    perspective: 1200px;
+    .greeting-stage {
+        height: 500px;
+        position: relative;
+        transform-origin: -100px center;
+        transition: transform 2s;
+        transform-style: preserve-3d;
+    }
+
     h1 {
         position: absolute;
         top: 113px;
         left: 40px;
         font-size: 42px;
+
+        transition: transform 0.3s;
     }
 
     .ipt {
@@ -52,6 +112,8 @@ canvas {
         border: 1px solid #c7c7c7;
         font-size: 16px;
         line-height: 34px;
+
+        transition: transform 0.3s;
         &:focus {
             outline: none;
         }
@@ -63,16 +125,20 @@ canvas {
         left: 200px;
         width: 40px;
         height: 34px;
-        background: #42e3e5 url(../images/enter.png) center no-repeat;
+        background: #42e3e5 url(../assets/images/enter.png) center no-repeat;
         cursor: pointer;
+
+        transition: transform 0.3s;
     }
     .g-icons {
         position: absolute;
         top: 242px;
         left: 45px;
         a {
-            margin-right: 5px;
+            margin-right: 3px;
         }
+
+        transition: transform 0.3s;
     }
     .icon {
         display: inline-block;
@@ -83,29 +149,63 @@ canvas {
         background-size: auto 100%;
         &.i-github {
             width: 16px;
-            background-image: url(../images/i-github.png);
+            background-image: url(../assets/images/i-github.png);
         }
         &.i-codepen {
             width: 94px;
-            background-image: url(../images/i-codepen.svg);
+            background-image: url(../assets/images/i-codepen.svg);
             background-size: auto 100%;
+        }
+        &.i-sf {
+            width: 30px;
+            background-image: url(../assets/images/i-sf.png);
         }
         &.i-blog {
             width: 30px;
-            background-image: url(../images/i-blog.png);
+            background-image: url(../assets/images/i-blog.png);
         }
+    }
+}
+
+.greeting.inactive {
+    .greeting-stage {
+        // transform: rotateY(60deg);
+        transition: transform 2s 1s;
+    }
+    
+    h1 {
+        transform: translateZ(-200px);
+    }
+    .ipt {
+        transform: translateZ(-150px);
+    }
+    .btn {
+        transform: translateZ(-100px);
+    }
+    .g-icons {
+        transform: translateZ(-50px);
+    }   
+}
+
+.greeting.active {
+    .greeting-stage {
+        transition: transform 1s;
     }
 }
 
 
 // about
 .about {
+    user-select: none;
     position: absolute;
     top: 50%;
     left: 0;
     width: 100%;
     margin-top: -140px;
 
+    a {
+        color: #fff;
+    }
     .back-btn {
         position: absolute;
         left: 50%;
@@ -166,11 +266,13 @@ canvas {
         margin: 5px;
         
         perspective: 800px;
-        transform-origin: left top;
+        // transform-origin: left top;
+
+        opacity: 0;
 
         @for $i from 1 through 6 {
-            &:nth-child(#{$i}) {
-                transition: transform 0.8s 0.05s * $i;
+            &.animate:nth-child(#{$i}) {
+                transition: transform  1s 0.05s * $i,  opacity 1s 0.05s * $i;
             }
         }
 
@@ -178,7 +280,8 @@ canvas {
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            transform-style: preserve-3d;
         }
 
         .a-item-con {
@@ -203,26 +306,59 @@ canvas {
             width: 100%;
             height: 100%;
 
-            backface-visibility:hidden;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
         .a-con {
             display: table-cell;
             vertical-align: middle; 
             width: 100%;
             height: 100%;
+            cursor: default;
+            
             // outline: 1px solid red;
         }
     }
 
+    .a-label {
+        z-index: 2;
+    }
+
     .a-desc {
-        transform: rotateX(180deg);
+        z-index: 1;
+        transform: rotateX(180deg) translateZ(1px);
     }
 
     .a-item.hover, .a-item:hover {
         .a-item-con {
             transform: rotateX(180deg);
         }
+        .a-label {
+            z-index: 1;
+        }
+        .a-desc {
+            z-index: 2;
+        }
     }
+    @at-root .no-webgl,.ie .about {
+        .a-item .a-desc {
+            visibility: hidden;
+            transform: none;
+        }
+        .a-item.hover, .a-item:hover {
+            .a-desc {
+                visibility: visible;
+            }
+            .a-label {
+                visibility: hidden;
+            }
+            .a-item-con {
+                transform: none;
+            }
+        }
+    }
+
+
 
     .a-item:nth-child(1) .a-item-con {
         background: #79e0f6;
@@ -234,17 +370,83 @@ canvas {
         background: #79eff6;
     }
     .a-item:nth-child(4) .a-item-con {
-        background: #65bcff;
+        background: #79eff6;
     }
     .a-item:nth-child(5) .a-item-con {
         background: #45e0f7;
     }
     .a-item:nth-child(6) .a-item-con {
-        background: #45c7f7;
+        background: #79e0f6;
+    }
+
+    .a-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+
+        &.shufa {
+            background-image: url(../assets/images/yong.png);
+        }
+        &.guitar {
+            background-image: url(../assets/images/guitar.png);
+        }
+        &.lanqiu {
+            background-image: url(../assets/images/lanqiu.png);
+        }
+        &.sumiao {
+            background-image: url(../assets/images/sumiao.png);
+        }
+        &.tenda {
+            width: 70px;
+            background-image: url(../assets/images/tenda.png);
+        }
+        &.meizu {
+            width: 70px;
+            background-image: url(../assets/images/meizu.png);
+        }
+        &.qianduan {
+            width: 40px;
+            background-image: url(../assets/images/qianduan.png);
+        }
+        &.m3 {
+            width: 40px;
+            height: 40px;
+            background-image: url(../assets/images/m3.png);
+        }        
+    }
+
+
+    .a-item.career .a-desc {
+        font-size: 14px;
+    }
+
+
+    .fa-wechat {
+        cursor: pointer;
     }
 }
 
-
+.about.active {
+    .a-list {
+        .a-item {
+            // transition-timing-function: ease-in;
+            opacity: 1;
+        }
+    }
+}
+.about.inactive {
+    transition-duration: 1.5s;
+    transition-timing-function: cubic-bezier(0.375, 0.12, 0.865, 1);
+    .a-list {
+        .a-item {
+            transition-timing-function: cubic-bezier(0.075, 0.32, 0.865, 1);
+        }
+    }
+}
 
 
 

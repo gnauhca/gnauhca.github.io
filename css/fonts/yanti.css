@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "yanti";
+    src: url("yanti.eot"); /* IE9 */
+    src: url("yanti.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    
+    url("yanti.woff") format("woff"), /* chrome、firefox */
+    url("yanti.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+ */
+    
+    url("yanti.svg#yanti") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+
+

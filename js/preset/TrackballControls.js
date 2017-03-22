@@ -3,7 +3,7 @@
  * @author Mark Lundin 	/ http://mark-lundin.com
  */
 
-THREE.TrackballControls = function ( object, domElement ) {
+THREE.TrackballControls = function ( object, target, domElement ) {
 
 	var _this = this;
 	var STATE = { NONE: -1, ROTATE: 0, ZOOM: 1, PAN: 2, TOUCH_ROTATE: 3, TOUCH_ZOOM_PAN: 4 };
@@ -38,7 +38,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 
 	// internals
 
-	this.target = new THREE.Vector3();
+	this.target = target || new THREE.Vector3(-100, 0, 0);
 
 	// travel
 	this.travel = false;
@@ -46,6 +46,14 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.travelSpeed = 50000; //  second for 360 degree
 	this.travelHeight = 200;
 	this.travelHeightOffset = this.travelHeight * 0.3;
+
+
+	this.setTravel = function() {
+		this.travelDistance = (new THREE.Vector3).copy(this.object.position).sub(this.target).setY(0).length();
+		this.travelSpeed = 50000; //  second for 360 degree
+		this.travelHeight = 200;
+		this.travelHeightOffset = this.travelHeight * 0.3;	
+	}
 
 
 
@@ -319,9 +327,11 @@ THREE.TrackballControls = function ( object, domElement ) {
 		cosAngel = Math.cos(nextAngel);
 		sinAngel = Math.sin(nextAngel)
 
-		x = cosAngel * this.travelDistance;
-		z = sinAngel * this.travelDistance;
-		y = this.travelHeight + this.travelHeightOffset * Math.cos(nextAngel);
+
+		// console.log(cosAngel);
+		x = cosAngel * this.travelDistance * (1-Math.abs(cosAngel * 0.2));
+		z = sinAngel * this.travelDistance * (1-Math.abs(cosAngel * 0.2));
+		y = this.travelHeight + this.travelHeightOffset * cosAngel;
 		nextVec.set(x,y,z); 
 
 		// console.log((nextAngel * 180 / Math.PI) | 0, nextVec.x|0,  nextVec.z|0);

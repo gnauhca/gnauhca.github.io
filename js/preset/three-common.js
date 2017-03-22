@@ -39,7 +39,7 @@ THREE.Object3D.prototype.animate = function(target, dur, delay=0, tweenObj) {
 			let destKey = key;
 
 			if (key === 'lookAt') {
-				let initLookAt = object3D.userData.lookAt || THREE.THREEUtil.getLookAt(object3D);
+				let initLookAt = object3D.userData.lookAt || object3D.getLookAt(object3D);
 				['x','y','z'].forEach(function(lookAtKey) {
 					init['lookAt_' + lookAtKey] = initLookAt[lookAtKey];
 					dest['lookAt_' + lookAtKey] = target['lookAt'][lookAtKey];
@@ -84,7 +84,8 @@ THREE.Object3D.prototype.animate = function(target, dur, delay=0, tweenObj) {
 					}
 				}
 
-				if (current.lookAt_x) {
+				if ('lookAt_x' in current) {
+					// console.log(current.lookAt_y);
 					object3D.lookAt(
 						new THREE.Vector3(current.lookAt_x, current.lookAt_y, current.lookAt_z)
 					);
@@ -142,16 +143,18 @@ THREE.SVGGemetry = function(svgString, options) {
 		bevelSegments: 12,
 		bevelEnabled: false,
 		curveSegments: 80,
-		steps: 1
+		steps: 10
 	};
 	var svgGemo;
 
-	try {
-		options = $.extend({}, defaultOptions, options);
-		svgGemo = new THREE.ExtrudeGeometry(shape, options)
-		svgGemo.center();	
-		svgGemo.rotateX(Math.PI);
-	} catch(e) {}
+	options = {...defaultOptions, ...options};
+	svgGemo = new THREE.ExtrudeGeometry(shape, options);
+
+	// Normalize the geometry. 
+	// Make the geometry centered and have a bounding sphere of radius 1.0.
+	// svgGemo.center();
+	svgGemo.normalize();	
+	svgGemo.rotateX(Math.PI);
 	return svgGemo;
 }
 

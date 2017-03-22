@@ -52,12 +52,12 @@ class Loader {
 						// console.log(loadTasks[0].loaded, loadTasks[1].loaded);
 						// 成功回调
 						if (getLoadedSize() / totalSize === 1 && loadedCount === loadTasks.length) {
-							onProgress(getLoadedSize() / totalSize);
+							onProgress && onProgress(getLoadedSize() / totalSize);
 							onLoad(that._getResults(loadParams));
 						}
 					}, function(progress) {
 						loadTask.loaded = loadTask.size * progress;
-						onProgress(getLoadedSize() / totalSize);
+						onProgress && onProgress(getLoadedSize() / totalSize);
 					});
 				})(loadTask);
 			}			
@@ -194,7 +194,7 @@ let loadMethod = {
 	// 下载 模型
 	'json': function(url, onLoad, onProgress) {
 		let xhrLoader = new XHRLoader();
-		xhrLoader.load(url, onLoad, onProgress);
+		xhrLoader.load(url, (str)=>{ onLoad(JSON.parse(str)); }, onProgress);
 	},
 
 	// model 

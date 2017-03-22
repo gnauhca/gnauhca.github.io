@@ -1,7 +1,7 @@
 class Snippet {
     constructor(snippetCfg) {
         this.snippetCfg = snippetCfg; // text or imgsrc or ... used by createTexture
-        this.plane = this.createPlane();
+        this.mesh = this.createPlane();
 
         this.cvs = document.createElement('canvas');
         this.cvs.width = 256;
@@ -12,18 +12,35 @@ class Snippet {
         this.createTexture();
     }
     createPlane() {
-        let planeGeom = new THREE.PlaneGeometry(100,100,10,10);
+        let planeGeom = new THREE.PlaneGeometry(50,50,6,6);
         let planeMat = new THREE.MeshBasicMaterial({color: 0xffffff/*, wireframe: true*/});
     
         planeMat.side = THREE.DoubleSide;
         planeMat.opacity = 1;
         planeMat.transparent = true;
+        planeMat.blending = THREE.AdditiveBlending;
 
         let plane = new THREE.Mesh(planeGeom, planeMat);
         
         plane.scale.multiplyScalar((this.snippetCfg.width|| 100)/100);
+        this.plane = plane;
 
-        return plane;
+		let outGeom = new THREE.SphereGeometry(20 + Math.random() * 3, 6, 4);
+		// outGeom = new THREE.TetrahedronGeometry(100, 0);
+		if (Math.random() > 0.5) {
+			outGeom = new THREE.BoxGeometry(40, 40, 40);
+		}
+
+		let outMat = new THREE.MeshBasicMaterial({color: 0x333333, wireframe: true, opacity: 0.3});
+        let out = new THREE.Mesh(outGeom, outMat);
+
+
+        let group = new THREE.Group();
+        group.add(plane);
+        // group.add(out);
+
+
+        return group;
     }
     createTexture() {
         // extends
@@ -32,11 +49,15 @@ class Snippet {
 
 class TextSnippet extends Snippet {
     createTexture() {
+        let colors = ['#2ea5c1', '#666', '#abcdef', '#e86240'];
         let text = this.snippetCfg.text;
         let font = this.snippetCfg.font || '100px microsoft yahei';
         let pos = this.snippetCfg.pos || {x: 0, y: 100};
 
-        this.ctx.fillStyle = '#000';
+        this.ctx.fillStyle = this.snippetCfg.fillStyle || colors[Math.random()*colors.length|0];
+        if (/[\u4E00-\u9FA5]/.test(text)) {
+            this.ctx.fillStyle = "#333";
+        }
         this.ctx.font = font;
         // this.ctx.font = '100px Georgia';
         this.ctx.fillText(text, pos.x, pos.y);
@@ -80,6 +101,8 @@ class ImgSnippet extends Snippet {
 
             // document.body.appendChild(this.cvs);
             this.plane.material.map = texture;
+            this.plane.material.bumpMap = texture;
+            this.plane.material.bumpScale = texture;
             this.plane.material.needsUpdate = true;
         }
 
@@ -104,11 +127,18 @@ let snippetCreator = {
                 width: 40
             }) 
         },
-        
+        '周': function() {
+            return new TextSnippet({
+                text: "周",
+                font: "70px yanti",
+                pos: {x: 50, y: 150}
+            })
+        },
+
         'age': function() {
             return new TextSnippet({
-                text: '25',
-                font: '30px microsoft yahei'
+                text: '1991',
+                font: '60px Arial'
             })
         },
         'born': function() {
@@ -133,11 +163,18 @@ let snippetCreator = {
                 width: 20
             }) 
         },
-        'shufa': function() {
+        '永': function() {
             return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.shufa.src,
-                width: 20
+                imgSrc: window.ZZC.ASSETS.snippets['永'].src,
+                width: 35
             }) 
+        },
+        '篮': function() {
+            return new TextSnippet({
+                text: "篮",
+                font: "50px yanti",
+                pos: {x: 50, y: 150}
+            })
         },
         'pingpangqiu': function() {
             return new ImgSnippet({
@@ -160,6 +197,34 @@ let snippetCreator = {
         },
 
         // works
+        '前': function() {
+            return new TextSnippet({
+                text: "前",
+                font: "70px yanti",
+                pos: {x: 50, y: 150}
+            })
+        },
+        '端': function() {
+            return new TextSnippet({
+                text: "端",
+                font: "70px yanti",
+                pos: {x: 50, y: 150}
+            })
+        },
+        '设': function() {
+            return new TextSnippet({
+                text: "设",
+                font: "70px yanti",
+                pos: {x: 50, y: 150}
+            })
+        },
+        '计': function() {
+            return new TextSnippet({
+                text: "计",
+                font: "70px yanti",
+                pos: {x: 50, y: 150}
+            })
+        },
         'meizu': function() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.meizu.src,
@@ -175,16 +240,20 @@ let snippetCreator = {
 
         // skills
         'html5': function() {
-            return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.html5.src,
-                width: 20
-            }) 
+            return new TextSnippet({
+                text: "\uf13b",
+                font: "80px FontAwesome",
+                pos: {x: 50, y: 150},
+                fillStyle: '#e54d26'
+            })
         },
         'css3': function() {
-            return new ImgSnippet({
-                imgSrc: window.ZZC.ASSETS.snippets.css3.src,
-                width: 20
-            }) 
+            return new TextSnippet({
+                text: "\uf13c",
+                font: "80px FontAwesome",
+                pos: {x: 50, y: 150},
+                fillStyle: '#3799d6'
+            })
         },
     },
 

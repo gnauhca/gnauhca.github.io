@@ -13,7 +13,7 @@ class Planet extends Time {
 
     setup() {
         this.snippets = this.snippetNames.map((snippetName)=>{
-            return snippetCreator.create(snippetName).plane;
+            return snippetCreator.create(snippetName).mesh;
         });
     }
 }
@@ -27,7 +27,7 @@ let planetData = [
     {
         'name': 'age',
         'angle': 0,
-        'snippets': ['born']
+        'snippets': ['age']
     },
     {
         'name': 'gender',
@@ -37,12 +37,12 @@ let planetData = [
     {
         'name': 'hobbies',
         'angle': 0,
-        'snippets': ['guitar', 'shufa', 'pingpangqiu', 'lanqiu', 'sumiao']
+        'snippets': ['永', 'guitar', 'pingpangqiu', 'lanqiu', 'sumiao']
     },
     {
         'name': 'works',
         'angle': 0,
-        'snippets': ['meizu', 'tenda']
+        'snippets': [/*'前', '端', */'meizu', 'tenda']
     },
     {
         'name': 'skills',
@@ -74,7 +74,7 @@ for (let i = 0; i < planetData.length; i++) {
     planet.angleItems = planetData[i].snippets.map((snippet)=>{
         return currentAngle += angleStep;
     });
-    console.log(planet);
+    // console.log(planet);
 
     planets[planetData[i].name] = planet;
     

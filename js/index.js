@@ -1,125 +1,84 @@
-// import './preset/preset.js';
 import '../css/index.scss';
+import 'script-loader!jquery';
+import Detector from './common/detector.js';
 import {resize} from './resize.js';
 import Galaxy from './galaxy.js';
-import ASSETS from './common/assets.js';
+import { ASSETS, BASICASSETS } from '../assets/assets.js';
 import Loader from './common/loader.js';
+import viewManager from './views/viewmanager.js';
+
+let loadingView = viewManager.getView('loading');
+let mainView = viewManager.getView('main');
+
+window.loadingView = loadingView;
 
 let assetsLoader = new Loader();
 
 
-assetsLoader.load(ASSETS, (p)=>{console.log('loaded: ' + p);})
-            .then((assets)=>{
-                // excute preset.js
-                let script = document.createElement('script');
-                script.src = assets.presetjs.src;
-                document.body.appendChild(script);
-                script.onload = init;
+if (!!window.ActiveXObject || "ActiveXObject" in window) {
+    $('html').addClass('ie');
+}
 
-                window.ZZC = {};
-                window.ZZC.ASSETS = assets;
-                console.log(ASSETS, assets);
-            })
+// webgl
+if (Detector.webgl) {
+
+    assetsLoader.load(BASICASSETS).then(()=>{
+
+        viewManager.activate('loading');
+
+        document.body.style.visibility = 'visible';
+
+        assetsLoader.load(ASSETS, (p)=>{
+            // console.log(p);
+            loadingView.setPercent(p*100|0);
+        })
+        .then((assets)=>{
+            // excute preset.js
+            let script = document.createElement('script');
+            script.src = assets.presetjs.src;
+
+            script.onload = ()=>{
+                
+                setTimeout(()=>{
+                    viewManager.inactivate('loading');
+                    init();
+                }, TIME_1000);
+            };
+            document.body.appendChild(script);
+
+            window.ZZC = {};
+            window.ZZC.ASSETS = assets;
+            // console.log(ASSETS, assets);
+        });
+
+    });
+} else {
+    $('html').addClass('no-webgl');
+    viewManager.activate('main');
+    viewManager.activate('greeting');
+}
+
 
 function init() {
 
+
+
+
+
 TIME.start();
 
-// webgl
+
 let galaxy = new Galaxy();
 galaxy.entry();
-// galaxy.travel();
+
+setTimeout(()=>{
+    viewManager.activate('main');
+}, TIME_3500);
+setTimeout(()=>{
+    viewManager.activate('greeting');
+}, TIME_4500);
 
 
-// enter change
-(function() {
-    let $greeting = $('.greeting');
-    let $about = $('.about');
-
-    let $enterBtn = $('.enter-btn');
-    let $backBtn = $('.back-btn');
-    let $aItems = $('.a-item');
-
-    let animateData = {};
-    
-
-
-    function init() {
-        resize();
-        hideAbout();
-        $greeting.addClass('animate');
-        $about.addClass('animate');
-        $enterBtn.on('click', function() {
-            showAbout();
-        });
-        $backBtn.on('click', function() {
-            hideAbout();
-        });
-    }
-
-    function showAbout() {
-        $greeting.addClass('invisible');
-        $about.removeClass('invisible');
-        escapeFromEnter();
-    }
-
-    function hideAbout() {
-        $about.addClass('invisible');
-        $greeting.removeClass('invisible');
-        hideIntoEnter();
-    }
-
-    function resize() {
-        setAnimateData();
-    }
-
-    // calc escapeFromEnter attr
-    function setAnimateData() {
-        let enterPos = $enterBtn[0].getBoundingClientRect();
-        let enterWidth = $enterBtn.outerWidth();
-        let enterHeight = $enterBtn.outerHeight();
-
-        $aItems.each(function() {
-            let $elem = $(this);
-            let animateId = Math.random() + '';
-            let elemPos = $elem[0].getBoundingClientRect();
-            let elemWidth = $elem.outerWidth();
-            let elemHeight = $elem.outerHeight();
-
-            let translateX = enterPos.left - elemPos.left;
-            let translateY = enterPos.top - elemPos.top;
-
-            let scaleX = enterWidth / elemWidth;
-            let scaleY = enterHeight / elemHeight;
-
-            $(this).data('animate-id', animateId);
-            animateData[animateId] = {
-                'transform': `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY}) rotateX(${Math.random()*360-180}deg)`
-            }
-        });
-    }
-    
-
-    function hideIntoEnter() {
-        $aItems.each(function() {
-            let $elem = $(this);
-            let animateId = $elem.data('animate-id');
-            let animateAttrs = animateData[animateId];
-
-            for (var key in animateAttrs) {
-                $elem.css(key, animateAttrs[key]);
-            }
-        });
-    }
-
-    function escapeFromEnter() {
-        $aItems.css({
-            'transform': 'none'
-        });
-    }
-
-    init();
-})();
 
 
 // hover rotate plugin
@@ -153,7 +112,8 @@ class HoverRotate {
 
     reset() {
         this.$effectElem.css({
-            'transform': `rotate3d(0,0,0,0)`
+            'transform': `rotate3d(0,0,0,0)`,
+            'filter': 'none'
         });
     }
 
@@ -178,7 +138,8 @@ class HoverRotate {
         // console.log(`rotate3d(${rotateX}, ${-rotateY}, 0, ${rotateAngle})`);
 
         this.$effectElem.css({
-            'transform': `rotate3d(${rotateX}, ${rotateY}, 0, ${rotateAngle})`
+            'transform': `rotate3d(${rotateX}, ${rotateY}, 0, ${rotateAngle})`,
+            'filter': `brightness(${1- Math.abs(rotateX)*0.1})`
         });
     }
 }

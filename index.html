@@ -1,33 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <title>Chaz</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0">
+    <meta name="keyword" content="阿创、Chaz">
+    <meta name="description" content="阿创的个人网站">
+    <title>阿创的个人网站</title>
+    <link rel="shortcut icon" type="images/x-icon" href="http://gnauhca.com/favicon.ico">  
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
-<body>
+<body style="visibility: hidden;">
+    <div class="loading">
+        <div class="numbers-wrap">
+            <span class="numbers-label">百分之</span> 
+            <div class="numbers">零</div>
+        </div>
+    </div>
 
     <div class="main">
         <div class="greeting">
-            <h1>你好，我是阿创</h1>
-            <input class="ipt" type="text" value="console.log(me)">
-            <i class="btn enter-btn"></i>
-            <div class="g-icons">
-                <a href="https://github.com/gnauhca/" target="_blank">
-                    <i class="icon i-github"></i>
-                </a>
-                <a href="https://codepen.io/gnauhca/" target="_blank">
-                    <i class="icon i-codepen"></i>
-                </a>
-                <a href="https://gnauhca.github.io/blog" target="_blank">
-                    <i class="icon i-blog"></i>
-                </a>
+            <div class="greeting-stage">
+                <h1>你好，我是阿创</h1>
+                <input class="ipt" type="text" readonly="readonly" value="console.log(me)">
+                <i class="btn enter-btn"></i>
+                <div class="g-icons">
+                    <a href="https://github.com/gnauhca/" target="_blank">
+                        <i class="icon i-github"></i>
+                    </a>
+                    <a href="https://codepen.io/gnauhca/" target="_blank">
+                        <i class="icon i-codepen"></i>
+                    </a>
+                    <a href="https://segmentfault.com/u/zhzhchwin" target="_blank">
+                        <i class="icon i-sf"></i>
+                    </a>
+                    <a href="https://gnauhca.github.io/blog" target="_blank">
+                        <i class="icon i-blog"></i>
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div class="about invisible">
+        <div class="about">
             <div class="corner corner-1"></div>
             <div class="corner corner-2"></div>
             <i class="fa fa-long-arrow-left back-btn" aria-hidden="true"></i>
@@ -37,12 +53,12 @@
                         <div class="a-item-con">
                             <div class="a-wrap a-label">
                                 <div class="a-con">
-                                    Name
+                                    概要
                                 </div>
                             </div>
                             <div class="a-wrap a-desc">
                                 <div class="a-con">
-                                    Chaz <br> 阿创
+                                   1991 <br> <i class="fa fa-mars" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -54,12 +70,30 @@
                         <div class="a-item-con">
                             <div class="a-wrap a-label">
                                 <div class="a-con">
-                                    Age
+                                    职业
                                 </div>
                             </div>
                             <div class="a-wrap a-desc">
                                 <div class="a-con">
-                                    25
+                                     <i class="a-icon qianduan" title="前端"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="a-item career">
+                    <div class="a-item-box">
+                        <div class="a-item-con">
+                            <div class="a-wrap a-label">
+                                <div class="a-con">
+                                    工作经历
+                                </div>
+                            </div>
+                            <div class="a-wrap a-desc">
+                                <div class="a-con">
+                                    <a href="http://www.tenda.com.cn/" target="_blank"><i class="a-icon tenda" title="腾达"></i></a> <br>  
+                                    <a href="http://www.meizu.com/" target="_blank"><i class="a-icon meizu" title="魅族"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -71,12 +105,17 @@
                         <div class="a-item-con">
                             <div class="a-wrap a-label">
                                 <div class="a-con">
-                                    Gender
+                                    兴趣
                                 </div>
                             </div>
                             <div class="a-wrap a-desc">
                                 <div class="a-con">
-                                    <i class="fa fa-mars" aria-hidden="true"></i>
+                                    <!--<i class="fa fa-paint-brush" aria-hidden="true" title="素描"></i>-->
+                                    <i class="a-icon sumiao" title="素描"></i>
+                                    <i class="a-icon shufa" title="书法"></i>
+                                    <br>
+                                    <i class="a-icon guitar" title="吉他"></i>
+                                    <i class="a-icon lanqiu" title="运动"></i>
                                 </div>
                             </div>
                         </div>
@@ -88,12 +127,14 @@
                         <div class="a-item-con">
                             <div class="a-wrap a-label">
                                 <div class="a-con">
-                                    Career
+                                    自研
                                 </div>
                             </div>
                             <div class="a-wrap a-desc">
                                 <div class="a-con">
-                                    Fed
+                                    <a href="http://gnauhca.com/m3/build/" target="_blank">
+                                        <i class="a-icon m3" title="M3"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -105,30 +146,12 @@
                         <div class="a-item-con">
                             <div class="a-wrap a-label">
                                 <div class="a-con">
-                                    Hobbies
+                                    联系
                                 </div>
                             </div>
                             <div class="a-wrap a-desc">
                                 <div class="a-con">
-                                    <i class="fa fa-paint-brush" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="a-item">
-                    <div class="a-item-box">
-                        <div class="a-item-con">
-                            <div class="a-wrap a-label">
-                                <div class="a-con">
-                                    Contact
-                                </div>
-                            </div>
-                            <div class="a-wrap a-desc">
-                                <div class="a-con">
-                                    <i class="fa fa-wechat" aria-hidden="true"></i>
-                                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                    <a href="mailto:576073927@qq.com" title="576073927@qq.com"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +166,16 @@
         </div>
     </div>
 
-
+    <!--[if lt IE 9]>
+        <script>
+            window.onload = function() {
+                document.body.style.visibility = 'visible';
+                document.body.innerHTML = '<h1 style="position: fixed; width: 100%; top: 45%;text-align: center; font: 30px microsoft yahei; ">建议你使用 Chrome</h1>';
+            }
+        </script>
+    <![endif]--> 
+    
+    <!--<script>window.env = 'develop'</script>-->
 
     <script src="dist/index.js"></script>
 </body>
