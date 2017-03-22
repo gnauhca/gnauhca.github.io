@@ -58,7 +58,7 @@ class Loader {
 					}, function(progress) {
 						loadTask.loaded = loadTask.size * progress;
 						onProgress && onProgress(getLoadedSize() / totalSize);
-					});
+					}, loadTask.size);
 				})(loadTask);
 			}			
 		});
@@ -149,14 +149,21 @@ class Loader {
  */
 
 class XHRLoader {
-	load(url, onLoad, onProgress, onError) {
+	load(url, onLoad, onProgress, onError, size) {
 		let req = new XMLHttpRequest();
 
 		// report progress events
+		// console.log(url);
+		
 		req.addEventListener("progress", function(xhr) {
+				// console.log(url, xhr.lengthComputable);
+			// console.log(url, xhr);
 		    if (xhr.lengthComputable) {
 		        onProgress(xhr.loaded / xhr.total);
-		    }
+		    } else if (size) {
+				// console.log(xhr.loaded);
+				onProgress(Math.min(0.999, xhr.loaded / (size * 1024 * 5)));
+			}
 		}, false);
 
 		// load responseText into a new script element
@@ -183,36 +190,40 @@ let loadMethod = {
 	// return {src: string, img: dom, texture: THREE.Texture}
 	'img': function(url, onLoad, onProgress) {
 		let loader = new XHRLoader();
-		loader.load(url, function(img) {
-			let imgInfo = {};
-			imgInfo.img = img;
-			imgInfo.src = url;
-			onLoad(imgInfo);
+		loader.load(url, function() {
+			let img = new Image();
+			img.onload = ()=>{
+				let imgInfo = {};
+				imgInfo.img = img;
+				imgInfo.src = url;
+				onLoad(imgInfo);
+			}
+			img.src = url;
 		}, onProgress);
 	},
 
 	// 下载 模型
-	'json': function(url, onLoad, onProgress) {
+	'json': function(url, onLoad, onProgress, size) {
 		let xhrLoader = new XHRLoader();
 		xhrLoader.load(url, (str)=>{ onLoad(JSON.parse(str)); }, onProgress);
 	},
 
 	// model 
-	'model': function(url, onLoad, onProgress) {
+	'model': function(url, onLoad, onProgress, size) {
 		let xhrLoader = new XHRLoader();
 		xhrLoader.load(url, function(str) {
 			onLoad(str.replace(/module\.exports\s*=\s*/, ''));
-		}, onProgress);
+		}, onProgress, null, size);
 	},
 
 	// 下载 script 
-	'js': function(url, onLoad, onProgress) {
+	'js': function(url, onLoad, onProgress, size) {
 		let xhrLoader = new XHRLoader();
 		xhrLoader.load(url, function() {
 			let jsInfo = {};
 			jsInfo.src = url;
 			onLoad(jsInfo);
-		}, onProgress);
+		}, onProgress, null, size);
 	},
 	'font': function(url, onLoad, onProgress) {
 		let xhrLoader = new XHRLoader();

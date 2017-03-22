@@ -35,8 +35,6 @@ if (Detector.webgl) {
         .then((assets)=>{
             // excute preset.js
             let script = document.createElement('script');
-            script.src = assets.presetjs.src;
-
             script.onload = ()=>{
                 
                 setTimeout(()=>{
@@ -44,6 +42,8 @@ if (Detector.webgl) {
                     init();
                 }, TIME_1000);
             };
+            script.src = assets.presetjs.src;
+            
             document.body.appendChild(script);
 
             window.ZZC = {};

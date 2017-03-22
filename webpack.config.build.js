@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         'index': './js/index.js',
-        // 'preset': './js/preset/preset.js'
+        'preset': './js/preset/preset.js'
     },
     output: {
         'path': './dist',
@@ -12,7 +12,7 @@ module.exports = {
         'publicPath': './dist/'
     },
 
-    devtool: 'source-map',
+    // devtool: 'source-map',
 
     module: {
         rules: [
@@ -31,6 +31,10 @@ module.exports = {
     },
 
     plugins: [
+        new UglifyJSPlugin({comments: false})
+        // new webpack.ProvidePlugin({
+        //     $: 'zepto'
+        // })
     ],
 
     devServer: {
