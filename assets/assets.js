@@ -32,22 +32,36 @@ const ASSETS = {
         'lanqiu': {
             url: require('./images/snippets/lanqiu.png'), size: 10
         },
-        'meizu': {
-            url: require('./images/snippets/meizu.png'), size: 10
-        },
         'pingpangqiu': {
             url: require('./images/snippets/pingpangqiu.png'), size: 10
         },
         'sumiao': {
             url: require('./images/snippets/sumiao.png'), size: 10
         },
+        'ps': {
+            url: require('./images/snippets/ps.png'), size: 10
+        },
+        'maya': {
+            url: require('./images/snippets/maya.png'), size: 10
+        },
         '永': {
             url: require('./images/snippets/shufa.png'), size: 10
         },
-        /*'yumaoqiu': {
+        'yumaoqiu': {
             url: require('./images/snippets/yumaoqiu.png'), size: 10
-        },*/
-        'tenda': {
+        },
+        'ironman': {
+            url: require('./images/snippets/ironman.jpg'), size: 10
+        },
+        'spiderman': {
+            url: require('./images/snippets/spiderman.png'), size: 3
+        },
+
+
+        /*'meizu': {
+            url: require('./images/snippets/meizu.png'), size: 10
+        },
+        /*'tenda': {
             url: require('./images/snippets/tenda.png'), size: 10
         },
         'html5': {
@@ -55,7 +69,7 @@ const ASSETS = {
         },
         'css3': {
             url: require('./images/snippets/css3.png'), size: 10
-        },
+        },*/
     }
 };
 export { ASSETS, BASICASSETS};

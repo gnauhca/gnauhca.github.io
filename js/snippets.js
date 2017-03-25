@@ -138,7 +138,8 @@ let snippetCreator = {
         'age': function() {
             return new TextSnippet({
                 text: '1991',
-                font: '60px Arial'
+                font: '60px Arial',
+                pos: {x: 50, y: 150}
             })
         },
         'born': function() {
@@ -160,7 +161,7 @@ let snippetCreator = {
         'guitar': function() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.guitar.src,
-                width: 20
+                width: 30
             }) 
         },
         '永': function() {
@@ -182,6 +183,12 @@ let snippetCreator = {
                 width: 20
             }) 
         },
+        'yumaoqiu': function() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.yumaoqiu.src,
+                width: 20
+            }) 
+        },
         'lanqiu': function() {
             return new ImgSnippet({
                 imgSrc: window.ZZC.ASSETS.snippets.lanqiu.src,
@@ -194,6 +201,18 @@ let snippetCreator = {
                 font: "50px FontAwesome",
                 pos: {x: 50, y: 150}
             })
+        },
+        'ironman': function() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.ironman.src,
+                width: 30
+            }) 
+        },        
+        'spiderman': function() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.spiderman.src,
+                width: 40
+            }) 
         },
 
         // works
@@ -247,6 +266,12 @@ let snippetCreator = {
                 fillStyle: '#e54d26'
             })
         },
+        'ps': function() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.ps.src,
+                width: 25
+            }) 
+        },
         'css3': function() {
             return new TextSnippet({
                 text: "\uf13c",
@@ -254,6 +279,12 @@ let snippetCreator = {
                 pos: {x: 50, y: 150},
                 fillStyle: '#3799d6'
             })
+        },
+        'maya': function() {
+            return new ImgSnippet({
+                imgSrc: window.ZZC.ASSETS.snippets.maya.src,
+                width: 30
+            }) 
         },
     },
 

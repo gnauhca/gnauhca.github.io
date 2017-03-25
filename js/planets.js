@@ -37,18 +37,18 @@ let planetData = [
     {
         'name': 'hobbies',
         'angle': 0,
-        'snippets': ['永', 'guitar', 'pingpangqiu', 'lanqiu', 'sumiao']
+        'snippets': ['永', 'guitar', 'pingpangqiu', 'lanqiu', 'spiderman', 'sumiao', 'yumaoqiu', 'ironman']
     },
-    {
-        'name': 'works',
-        'angle': 0,
-        'snippets': [/*'前', '端', */'meizu', 'tenda']
-    },
-    {
-        'name': 'skills',
-        'angle': 0,
-        'snippets': ['html5', 'css3']
-    },
+    // {
+    //     'name': 'works',
+    //     'angle': 0,
+    //     'snippets': [/*'前', '端', */'meizu', 'tenda']
+    // },
+    // {
+    //     'name': 'skills',
+    //     'angle': 0,
+    //     'snippets': ['html5', 'ps'/*, 'css3'*/, 'maya']
+    // },
     
 ]
 

@@ -132,21 +132,28 @@ canvas {
     }
     .g-icons {
         position: absolute;
-        top: 242px;
+        top: 238px;
         left: 45px;
+        font-size: 22px;
+        line-height: 22px;
+        
         a {
-            margin-right: 3px;
+            margin-right: 1px;
+            i {
+                vertical-align: middle;
+            }
         }
 
         transition: transform 0.3s;
     }
     .icon {
         display: inline-block;
-        vertical-align: middle;
+        // vertical-align: top;
         height: 16px;
         background-repeat: no-repeat;
         background-position: center;
         background-size: auto 100%;
+        
         &.i-github {
             width: 16px;
             background-image: url(../assets/images/i-github.png);
@@ -157,11 +164,12 @@ canvas {
             background-size: auto 100%;
         }
         &.i-sf {
-            width: 30px;
+            width: 20px;
             background-image: url(../assets/images/i-sf.png);
         }
         &.i-blog {
-            width: 30px;
+            width: 60px;
+            height: 15px;
             background-image: url(../assets/images/i-blog.png);
         }
     }
@@ -361,22 +369,22 @@ canvas {
 
 
     .a-item:nth-child(1) .a-item-con {
-        background: #79e0f6;
+        background: rgba(59,199,223, 0.8);
     }
     .a-item:nth-child(2) .a-item-con {
-        background: #3eccea;
+        background: rgba(32,172,196, 0.8);
     }
     .a-item:nth-child(3) .a-item-con {
-        background: #79eff6;
+        background: rgba(53,193,217, 0.8);
     }
     .a-item:nth-child(4) .a-item-con {
-        background: #79eff6;
+        background: rgba(38,178,202, 0.8);
     }
     .a-item:nth-child(5) .a-item-con {
-        background: #45e0f7;
+        background: rgba(73,213,237, 0.8);
     }
     .a-item:nth-child(6) .a-item-con {
-        background: #79e0f6;
+        background: rgba(65,205,229, 0.8);
     }
 
     .a-icon {
@@ -409,7 +417,8 @@ canvas {
             background-image: url(../assets/images/meizu.png);
         }
         &.qianduan {
-            width: 40px;
+            width: 50px;
+            height: 30px;
             background-image: url(../assets/images/qianduan.png);
         }
         &.m3 {
